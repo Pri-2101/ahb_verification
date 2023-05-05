@@ -7,7 +7,7 @@ class apb_slave_agent extends uvm_agent;
   `uvm_component_utils(apb_slave_agent)
   apb_slave_agent_config slave_agent_cfg;
 
-  uvm_analysis_port #(apb_slave_access_item) ap;
+  uvm_analysis_port #(apb_slave_setup_item) setup_ap;
   apb_slave_monitor   slave_monitor;
   apb_slave_sequencer slave_sequencer;
   apb_slave_driver    slave_driver;
@@ -35,7 +35,7 @@ function void apb_slave_agent::build_phase(uvm_phase phase);
 endfunction: build_phase
 
 function void apb_slave_agent::connect_phase(uvm_phase phase);
-  ap = slave_monitor.rsp_ap;
+  setup_ap = slave_monitor.req_ap;
   //ap.connect(listener.analysis_export);
   if(slave_agent_cfg.active == UVM_ACTIVE) begin
     slave_driver.seq_item_port.connect(slave_sequencer.seq_item_export);

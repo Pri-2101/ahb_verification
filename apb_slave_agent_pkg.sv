@@ -2,7 +2,7 @@ package apb_slave_agent_pkg;
 
 import uvm_pkg::*;
 `include "uvm_macros.svh"
-`include "param_enums.svh"
+import param_enums::*;
 
 //import register_layering_pkg::*;
 //`include "apb_monitor_assertions.svh"
@@ -12,7 +12,7 @@ import uvm_pkg::*;
 `include "apb_slave_monitor.svh"
 `include "apb_slave_sequencer.svh"
 //`include "apb_listener.svh"
-`include "apb_slave_agent.sv"
+`include "apb_slave_agent.svh"
 
 
 // Utility Sequences

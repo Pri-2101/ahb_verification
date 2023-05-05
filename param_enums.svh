@@ -1,4 +1,4 @@
-
+package param_enums;
 typedef enum bit[1:0] {IDLE = 2'b00, BUSY = 2'b01, NONSEQ = 2'b10, SEQ = 2'b11} HTRANS_enum;
 
 typedef enum bit[2:0] {SINGLE = 3'b000, INCR = 3'b001, WRAP4 = 3'b010, INCR4 = 3'b011, WRAP8 = 3'b100, INCR8 = 3'b101, WRAP16 = 3'b110, INCR16 = 3'b111} HBURST_enum;
@@ -21,3 +21,5 @@ HBURST_enum hburst_enums;
 State_enum state_enums;
 HSIZE_enum hsize_enums;
 line_width_enum width_enums;
+
+endpackage : param_enums

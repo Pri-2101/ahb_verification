@@ -8,6 +8,8 @@ class env_config extends uvm_object;
 
     apb_slave_agent_config slave_agt_cfg;
     apb_master_agent_config master_agt_cfg;
+    
+    bit instantiate_coverage_collector_for_master;
 
     extern static function env_config get_config(uvm_component c);
     extern function new(string name = "env_config");
