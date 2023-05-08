@@ -125,7 +125,7 @@ endsequence; // FixedBurstWrongTermination
 //not (BUSY transfer after a SINGLE burst)
 //The master is not permitted to perform a BUSY transfer immediately after a SINGLE burst. SINGLE bursts must be followed by an IDLE transfer or a NONSEQ transfer.
 property SingleBurstWrongTermination;
-   HBURST[2:0] == SINGLE |-> ##[1:$] (HTRANS[1:0] !== IDLE && HTRANS[1:0] !== NONSEQ);
+   HBURST[2:0] == param_enums::SINGLE |-> ##[1:$] (HTRANS[1:0] !== param_enums::IDLE && HTRANS[1:0] !== param_enums::NONSEQ);
 endproperty; // SingleBurstWrongTerminationOne
 
 //not (burst not terminated either by above properties nor by slave error response)
@@ -150,60 +150,60 @@ endproperty; // LockedTransferNoIDLETerm
 //not (if in waited state and then once **HTRANS** changes from IDLE to NONSEQ, NONSEQ signal not held  till HREADY HIGH)
 //CONSIDER TEST CLOCK
 property WSCR1;
-   HREADY == WAITED ##0 HTRANS[1:0] == IDLE |-> ##[0:$] (HTRANS[1:0] == NONSEQ) ##[0:$] !$stable(HTRANS[1:0], @(posedge HCLK)) ##0 (HREADY == ACTIVE);
+   HREADY == param_enums::WAITED ##0 HTRANS[1:0] == param_enums::IDLE |-> ##[0:$] (HTRANS[1:0] == param_enums::NONSEQ) ##[0:$] !$stable(HTRANS[1:0], @(posedge HCLK)) ##0 (HREADY == param_enums::ACTIVE);
 endproperty; // WSCR1
 
 
 //not (if in waited state, master changes **HTRANS** from one to another but not IDLE to NONSEQ)
 //the following should not happen
 property WSCR2;
-   HREADY == WAITED |-> ##[0:$] ( HTRANS[1:0] !== IDLE) ##[0:$] (HTRANS[1:0] !== NONSEQ);
+   HREADY == param_enums::WAITED |-> ##[0:$] ( HTRANS[1:0] !== param_enums::IDLE) ##[0:$] (HTRANS[1:0] !== param_enums::NONSEQ);
 endproperty; // WSCR2
 
 
 //not (if in waited state, and in fixed length burst, then master changes **HTRANS** from one to another but not BUSY to SEQ)
 //the following should not happen
 property WSCR3;
-   HREADY == WAITED |-> ##[0:$]  (HTRANS[1:0] !== BUSY) ##[0:$] (HTRANS[1:0] !== SEQ);
+   HREADY == param_enums::WAITED |-> ##[0:$]  (HTRANS[1:0] !== param_enums::BUSY) ##[0:$] (HTRANS[1:0] !== param_enums::SEQ);
 endproperty; // WSCR3
 
 
 //not (if in waited state, and in fixed length burst, then if master changes **HTRANS** from BUSY to SEQ, but not held till HREADY HIGH)
 //the following should not happen
 property WSCR4;
-   HREADY == WAITED |-> ##[0:$] (HTRANS[1:0] == BUSY) ##[0:$] (HTRANS[1:0] == SEQ) ##[0:$] !$stable(HTRANS[1:0], @(posedge HCLK)) ##[0:$] (HREADY == ACTIVE);
+   HREADY == param_enums::WAITED |-> ##[0:$] (HTRANS[1:0] == param_enums::BUSY) ##[0:$] (HTRANS[1:0] == param_enums::SEQ) ##[0:$] !$stable(HTRANS[1:0], @(posedge HCLK)) ##[0:$] (HREADY == param_enums::ACTIVE);
 endproperty; // WSCR4
 
 
 //not (if in waited state, and in undefined length burst, master can change **HTRANS** from on to another but not from BUSY to any other)
 property WSCR5;
-  HREADY == WAITED |-> ##0 (HBURST[2:0] == INCR) ##[0:$] (HTRANS[1:0] !== BUSY) ##[0:$] (!$stable(HTRANS[1:0], @(posedge HCLK)));
+  HREADY == param_enums::WAITED |-> ##0 (HBURST[2:0] == param_enums::INCR) ##[0:$] (HTRANS[1:0] !== param_enums::BUSY) ##[0:$] (!$stable(HTRANS[1:0], @(posedge HCLK)));
 endproperty; // WSCR5
 
 
 //not (if in waited state, and in undefined length burst, master changes **HTRANS** from  BUSY to anther, but not when HREADY is LOW) // this probably should be implemented to other changes previously mentioned too.
 //the following should not happen
 property WSCR6;
-   HREADY == WAITED |-> ##0 (HBURST[2:0] == INCR) ##[0:$] (HTRANS[1:0] == BUSY) ##[0:$] (!$stable(HTRANS[1:0], @(posedge HCLK)) ##0 HREADY == ACTIVE);
+   HREADY == param_enums::WAITED |-> ##0 (HBURST[2:0] == param_enums::INCR) ##[0:$] (HTRANS[1:0] == param_enums::BUSY) ##[0:$] (!$stable(HTRANS[1:0], @(posedge HCLK)) ##0 HREADY == param_enums::ACTIVE);
 endproperty; // WSCR6
 
 
 //not (if in waited state, the master changes address during **HTRANS** not in IDLE)
 //the following should not happen
 property WSCR7(datawidth);
-   HREADY == WAITED |-> ##[0:$] (!$stable(HADDR[datawidth:0], @(posedge HCLK)) ##0 (HTRANS[1:0] !== IDLE));
+   HREADY == param_enums::WAITED |-> ##[0:$] (!$stable(HADDR[datawidth:0], @(posedge HCLK)) ##0 (HTRANS[1:0] !== param_enums::IDLE));
 endproperty; // WSCR7
 
 
 //not (if in waited state, the master changes from **HTRANS** IDLE to NONSEQ, and changes the address during NONSEQ by not holding it till HREADY is high in the next clock edge)
 property WSCR8(datawidth);
-   HREADY == WAITED |-> ##[0:$] (HTRANS[1:0] == IDLE) ##[0:$] (HTRANS[1:0] == NONSEQ) ##[0:$] (!$stable(HADDR[datawidth:0], @(posedge HCLK)) ##0 (HTRANS[1:0] == NONSEQ) ##[0:$] !$stable(HADDR[datawidth:0], @(posedge HCLK))) ##[0:$] (HREADY == ACTIVE);
+   HREADY == param_enums::WAITED |-> ##[0:$] (HTRANS[1:0] == param_enums::IDLE) ##[0:$] (HTRANS[1:0] == param_enums::NONSEQ) ##[0:$] (!$stable(HADDR[datawidth:0], @(posedge HCLK)) ##0 (HTRANS[1:0] == param_enums::NONSEQ) ##[0:$] !$stable(HADDR[datawidth:0], @(posedge HCLK))) ##[0:$] (HREADY == param_enums::ACTIVE);
 endproperty; // WSCR8
 
 
 //not (if in waited state there is ERROR response from the slave, master changes address not when **HTRANS** is in IDLE)
 property WSCR9(datawidth);
-   HREADY == WAITED |-> ##[0:$] HRESP ##[0:$] (!$stable(HADDR[datawidth:0], @(posedge HCLK)) ##0 (HTRANS[1:0] !== IDLE));
+   HREADY == param_enums::WAITED |-> ##[0:$] HRESP ##[0:$] (!$stable(HADDR[datawidth:0], @(posedge HCLK)) ##0 (HTRANS[1:0] !== param_enums::IDLE));
 endproperty; // WSCR9
 
 

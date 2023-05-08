@@ -1,6 +1,6 @@
 import uvm_pkg::*;
 import apb_master_agent_pkg::*;
-`include "param_enums.svh"
+//import param_enums::*;
 `include "uvm_macros.svh"
 //`include "apb_master_seq_item.svh"
 //`include "apb_master_agent_config.svh"

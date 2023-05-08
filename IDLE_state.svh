@@ -27,19 +27,19 @@ endclass : IDLE_state
 
 function void IDLE_state::set_data_items;
  req_item_to_be_sent.HADDR = 32'h0000_0000;
- req_item_to_be_sent.HTRANS = IDLE;
- req_item_to_be_sent.HSIZE = WORD;
+ req_item_to_be_sent.HTRANS = param_enums::IDLE;
+ req_item_to_be_sent.HSIZE = param_enums::WORD;
  req_item_to_be_sent.HWRITE = 1'b0;
  req_item_to_be_sent.HWDATA = 32'h0000_0000;
 endfunction : set_data_items
 
 //-----------------------DETERMINE_AND_CHANGE_TO_NEXT_STATE---------------------
 function bit[1:0] IDLE_state::determine_and_change_to_next_state();
-    if((prev_req_item.HTRANS == IDLE) && (prev_rsp_item.HREADY == HIGH) && (prev_rsp_item.HRESP = OKAY)) begin
-        std::randomize(next_state) with {next_state inside {IDLE, NONSEQ};};
+    if((prev_req_item.HTRANS == param_enums::IDLE) && (prev_rsp_item.HREADY == param_enums::HIGH) && (prev_rsp_item.HRESP = param_enums::OKAY)) begin
+        std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ};};
     end
     else begin
-        next_state = IDLE;
+        next_state = param_enums::IDLE;
     end
 
     return next_state;

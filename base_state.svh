@@ -51,7 +51,7 @@ endfunction: save_prev_rsp_item
 
 function base_state::new(string name = "base_state");
    super.new(name);
-   next_state = IDLE;
+   next_state = param_enums::IDLE;
 endfunction
 
 function void base_state::do_copy(uvm_object rhs);

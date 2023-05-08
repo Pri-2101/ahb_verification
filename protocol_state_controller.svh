@@ -68,22 +68,22 @@ function void protocol_state_controller::determine_and_change_to_next_state();
 
     next_state = _state.determine_and_change_to_next_state();
    
-    if(next_state == NONSEQ) begin
-        current_state = NONSEQ;
+    if(next_state == param_enums::NONSEQ) begin
+        current_state = param_enums::NONSEQ;
         nonseq_state_h = NONSEQ_state::type_id::create("nonseq_state_h");
         $cast(nonseq_state_h, _state);
     end
 
-    if(next_state == SEQ) begin
+    if(next_state == param_enums::SEQ) begin
         seq_state_h = SEQ_state::type_id::create("seq_state_h");
         seq_state_h.copy(_state);
-        current_state = SEQ;
+        current_state = param_enums::SEQ;
     end   
 
-    if(next_state == BUSY) begin
+    if(next_state == param_enums::BUSY) begin
         busy_state_h = BUSY_state::type_id::create("busy_state_h");
         busy_state_h.copy(_state);
-        current_state = BUSY;
+        current_state = param_enums::BUSY;
     end
             
 endfunction : determine_and_change_to_next_state
@@ -94,8 +94,8 @@ endfunction : determine_and_change_to_next_state
 
 function protocol_state_controller::new(string name = "protocol_state_controller");
     super.new(name);
-    current_state = IDLE;
-    next_state = IDLE;
+    current_state = param_enums::IDLE;
+    next_state = param_enums::IDLE;
 endfunction
 
 function void protocol_state_controller::do_copy(uvm_object rhs);

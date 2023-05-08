@@ -2,7 +2,7 @@ package apb_master_agent_pkg;
     import uvm_pkg::*;
     `include "uvm_macros.svh";
 
-    `include "param_enums.svh";
+    import param_enums::*;
     `include "apb_master_seq_item.svh"
     `include "apb_master_agent_config.svh"
     `include "apb_master_driver.svh"

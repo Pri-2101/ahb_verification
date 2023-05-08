@@ -12,36 +12,36 @@ class coverage_collector_for_master extends uvm_subscriber #(uvm_sequence_item);
    //define covergroups here
     covergroup HTRANS_covergroup;
        coverpoint rcvd_txn.HTRANS {
-          bins IDLE_bin = {IDLE};
-	  bins BUSY_bin = {BUSY};
-	  bins NONSEQ_bin = {NONSEQ};
-	  bins SEQ_bin = {SEQ};
+          bins IDLE_bin = {param_enums::IDLE};
+	  bins BUSY_bin = {param_enums::BUSY};
+	  bins NONSEQ_bin = {param_enums::NONSEQ};
+	  bins SEQ_bin = {param_enums::SEQ};
        }
     endgroup // HTRANS_cover
 
     covergroup HBURST_covergroup;
        coverpoint rcvd_txn.HBURST {
-	  bins SINGLE_bin = {SINGLE};
- 	  bins INCR_bin = {INCR};
- 	  bins WRAP4_bin = {WRAP4};
- 	  bins INCR4_bin = {INCR4};
- 	  bins WRAP8_bin = {WRAP8};
- 	  bins INCR8_bin = {INCR8};
- 	  bins WRAP16_bin = {WRAP16};
- 	  bins INCR16_bin = {INCR16};
+	  bins SINGLE_bin = {param_enums::SINGLE};
+ 	  bins INCR_bin = {param_enums::INCR};
+ 	  bins WRAP4_bin = {param_enums::WRAP4};
+ 	  bins INCR4_bin = {param_enums::INCR4};
+ 	  bins WRAP8_bin = {param_enums::WRAP8};
+ 	  bins INCR8_bin = {param_enums::INCR8};
+ 	  bins WRAP16_bin = {param_enums::WRAP16};
+ 	  bins INCR16_bin = {param_enums::INCR16};
        }				  
     endgroup // HBURST_cover
     
     covergroup HSIZE_covergroup;
         coverpoint rcvd_txn.HSIZE {
-	   bins BYTE_bin = {BYTE};
-	   bins HALF_WORD_bin = {HALF_WORD};
-	   bins WORD_bin = {WORD};
-	   bins DOUBLE_WORD_bin = {DOUBLE_WORD};
-	   bins FOUR_WORD_LINE_bin = {FOUR_WORD_LINE};
-	   bins EIGHT_WORD_LINE_bin = {EIGHT_WORD_LINE};
-	   bins FIVE_TWELVE_bin = {FIVE_TWELVE};
-	   bins TEN_TWENTY_FOUR_bin = {TEN_TWENTY_FOUR};
+	   bins BYTE_bin = {param_enums::BYTE};
+	   bins HALF_WORD_bin = {param_enums::HALF_WORD};
+	   bins WORD_bin = {param_enums::WORD};
+	   bins DOUBLE_WORD_bin = {param_enums::DOUBLE_WORD};
+	   bins FOUR_WORD_LINE_bin = {param_enums::FOUR_WORD_LINE};
+	   bins EIGHT_WORD_LINE_bin = {param_enums::EIGHT_WORD_LINE};
+	   bins FIVE_TWELVE_bin = {param_enums::FIVE_TWELVE};
+	   bins TEN_TWENTY_FOUR_bin = {param_enums::TEN_TWENTY_FOUR};
         }				   
     endgroup // HSIZE_covergroup
 

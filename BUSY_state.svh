@@ -56,7 +56,7 @@ function void BUSY_state::set_data_items;
  req_item_to_be_sent.HBURST = prev_req_item.HBURST;
  req_item_to_be_sent.HSIZE = prev_req_item.HSIZE;
   //if slave wasn't ready, hold the data
- if(prev_rsp_item.HREADY == LOW) begin
+ if(prev_rsp_item.HREADY == param_enums::LOW) begin
     req_item_to_be_sent.HADDR = prev_req_item.HADDR;
  end
  else begin
@@ -84,17 +84,17 @@ endfunction : update_transfer_variables
 function bit[1:0] BUSY_state::determine_and_change_to_next_state;
    //We are only talking about multiple burst transfers, as the any transfer must start with a NONSEQ transfer type
     if(no_of_transfers > 1) begin
-	    if(prev_req_item.HTRANS == NONSEQ) begin
-	       std::randomize(next_state) with {next_state inside {IDLE, SEQ, BUSY};};
+	    if(prev_req_item.HTRANS == param_enums::NONSEQ) begin
+	       std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::SEQ, param_enums::BUSY};};
     	    end
 	    else begin
-	        if(prev_req_item.HTRANS == SEQ) begin
-	            std::randomize(next_state) with {next_state inside {SEQ, BUSY};};
+	        if(prev_req_item.HTRANS == param_enums::SEQ) begin
+	            std::randomize(next_state) with {next_state inside {param_enums::SEQ, param_enums::BUSY};};
 	        end
   	    end
     end
     else begin
-        std::randomize(next_state) with {next_state inside {IDLE, NONSEQ};};
+        std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ};};
     end
 
     return next_state;
@@ -109,7 +109,7 @@ endfunction : determine_and_change_to_next_state
 
 function BUSY_state::new(string name = "BUSY_state");
    super.new(name);
-   next_state = IDLE;
+   next_state = param_enums::IDLE;
    no_of_transfers = 1;
    is_wrapping_burst = 0;
 //next_state_candidates = {idle_state_obj, seq_state_obj, nonseq_state_obj, busy_state_obj};
@@ -173,7 +173,7 @@ endfunction: do_compare
 function string BUSY_state::convert2string();
     string s;
     $sformatf(s, "%s\n", super.convert2string());
-    $sformatf(s, "%s\n TRANSFER_NOT_COMPLETE\t%0b\n No_OF_TRANSFERS\t%0d\n IS_BURST\t%b\n IS_WRAPPING_BURST\t%0b\n HADDR_BOUNDARY\t%0h\n SIZE_INCREMENT\t%0h\n HADDR_WRAP_START_ADDRESS\t%0h\n", s, transfer_not_complete, is_burst, is_wrapping_burst, HADDR_boundary, size_increment, HADDR_wrap_start_address);
+    $sformatf(s, "%s\n TRANSFER_NOT_COMPLETE\t%0b\n No_OF_TRANSFERS\t%0d\n IS_BURST\t%b\n IS_WRAPPING_BURST\t%0b\n HADDR_BOUNDARY\t%0h\n SIZE_INCREMENT\t%0h\n HADDR_WRAP_START_ADDRESS\t%0h\n", s, transfer_not_complete, no_of_transfers, is_burst, is_wrapping_burst, HADDR_boundary, size_increment, HADDR_wrap_start_address);
     return s;
 endfunction: convert2string
 

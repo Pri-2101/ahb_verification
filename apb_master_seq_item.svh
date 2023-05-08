@@ -24,7 +24,7 @@ class apb_master_setup_item extends uvm_sequence_item;
     extern function void do_record(uvm_recorder recorder);
 endclass : apb_master_setup_item
 
-constraint apb_master_setup_item::HSIZE_constraint {HSIZE inside {BYTE, HALF_WORD, WORD};} //parameterize this according to the data bus width
+constraint apb_master_setup_item::HSIZE_constraint {HSIZE inside {param_enums::BYTE, param_enums::HALF_WORD, param_enums::WORD};} //parameterize this according to the data bus width
 constraint apb_master_setup_item::HWDATA_subject_to_HWRITE_constraint {solve HWRITE before HWDATA; if(!HWRITE) HWDATA == 32'h00000000;}
 
 function apb_master_setup_item::new(string name = "apb_master_setup_item");

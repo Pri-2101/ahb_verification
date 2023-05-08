@@ -15,8 +15,8 @@ interface apb_slave_monitor_bfm (input HCLK,
                                  input HRESP,
                                  input HREADY,
                                  input[2:0] HSIZE,
-                                 input HWRITE,
-                                 input HREADYOUT);
+                                 input HWRITE);
+                                 //input HREADYOUT);
 //This part of the code is synthesisable, in that the connections above will be synthesised where ultimately we will have open pins in the hardware that need to be then read and sent to the computer for the testbench analysis
 //All the code below is the hybrid part, HVL part that will not get synthesised completely
   `include "apb_monitor_assertions.svh"
@@ -45,7 +45,7 @@ interface apb_slave_monitor_bfm (input HCLK,
           $cast(cloned_req, req.clone()); //sending a clone of req rather than create a new req seq_item in the loop here and then reading values into it.
           proxy.notify_setup(cloned_req);
         end
-      if(HREADYOUT && HSEL[apb_index])
+      if(HREADY && HSEL[apb_index])
         begin
           //rsp.HWRITE = HWRITE;
           //rsp.slv_err = PSLVERR;
@@ -75,11 +75,11 @@ interface apb_slave_monitor_bfm (input HCLK,
       //assert property( BurstTransferNumberCheckSeq(beats));
 
       assert property(@(posedge HCLK) ExtendedCycleWriteSignalConstant);
-      assert property(@(posedge HCLK) TransferCompleteReadDataValidity(datawidth));
+      assert property(@(posedge HCLK) TransferCompleteReadDataValidity(param_enums::datawidth));
       assert property(@(posedge HCLK) IDLETransferNoOKAYResp);
       assert property(@(posedge HCLK) BUSYTransferNoOKAYResp);
       //assert property(@(posedge HCLK) DefBurstBUSYTermination(beats)); probably should be an immediate assertion
-      assert property(@(posedge HCLK) BurstAddrChangeBUSY(datawidth));
+      assert property(@(posedge HCLK) BurstAddrChangeBUSY(param_enums::datawidth));
       assert property(@(posedge HCLK) BurstOneKBOverflow);
       //assert property(@(posedge HCLK) NonIncrBurstWrongTermination(beats));
       //assert property(@(posedge HCLK) NonIncrBurstWrongTerminationSeq(beats));
@@ -93,9 +93,9 @@ interface apb_slave_monitor_bfm (input HCLK,
       assert property(@(posedge HCLK) WSCR4);
       assert property(@(posedge HCLK) WSCR5);
       assert property(@(posedge HCLK) WSCR6);
-      assert property(@(posedge HCLK) WSCR7(datawidth));
-      assert property(@(posedge HCLK) WSCR8(datawidth));
-      assert property(@(posedge HCLK) WSCR9(datawidth));
+      assert property(@(posedge HCLK) WSCR7(param_enums::datawidth));
+      assert property(@(posedge HCLK) WSCR8(param_enums::datawidth));
+      assert property(@(posedge HCLK) WSCR9(param_enums::datawidth));
 
 
 endinterface: apb_slave_monitor_bfm

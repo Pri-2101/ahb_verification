@@ -39,12 +39,12 @@ endclass : NONSEQ_state
 
 function void NONSEQ_state::set_data_items;
    int 		temp;
-   req_item_to_be_sent.HTRANS = NONSEQ;
+   req_item_to_be_sent.HTRANS = param_enums::NONSEQ;
    
-   if(req_item_to_be_sent.HBURST !== SINGLE || req_item_to_be_sent.HBURST !== INCR ) begin
+   if(req_item_to_be_sent.HBURST !== param_enums::SINGLE || req_item_to_be_sent.HBURST !== param_enums::INCR ) begin
       is_burst = 1'b1;
       
-      if(req_item_to_be_sent.HBURST == WRAP4) begin
+      if(req_item_to_be_sent.HBURST == param_enums::WRAP4) begin
 	 is_wrapping_burst = 1'b1;
 	 no_of_transfers = 4;
 	 temp = ($pow(2, req_item_to_be_sent.HSIZE)/4) * 4;
@@ -52,7 +52,7 @@ function void NONSEQ_state::set_data_items;
 	 HADDR_boundary = HADDR_wrap_start_address + temp;
       end
       
-      if(req_item_to_be_sent.HBURST == WRAP8) begin
+      if(req_item_to_be_sent.HBURST == param_enums::WRAP8) begin
 	 is_wrapping_burst = 1'b1;
 	 no_of_transfers = 8;
 	 temp = ($pow(2, req_item_to_be_sent.HSIZE)/4) * 8;
@@ -60,7 +60,7 @@ function void NONSEQ_state::set_data_items;
 	 HADDR_boundary = HADDR_wrap_start_address + temp;
       end
 
-      if(req_item_to_be_sent.HBURST == WRAP16) begin
+      if(req_item_to_be_sent.HBURST == param_enums::WRAP16) begin
 	 is_wrapping_burst = 1'b1;
 	 no_of_transfers = 16;
 	 temp = ($pow(2, req_item_to_be_sent.HSIZE)/4) * 16;
@@ -68,15 +68,15 @@ function void NONSEQ_state::set_data_items;
 	 HADDR_boundary = HADDR_wrap_start_address + temp;
       end
       
-      if(req_item_to_be_sent.HBURST == INCR4)
+      if(req_item_to_be_sent.HBURST == param_enums::INCR4)
 	no_of_transfers = 4;
-      if(req_item_to_be_sent.HBURST == INCR8)
+      if(req_item_to_be_sent.HBURST == param_enums::INCR8)
 	no_of_transfers = 8;
-      if(req_item_to_be_sent.HBURST == INCR16)
+      if(req_item_to_be_sent.HBURST == param_enums::INCR16)
 	no_of_transfers = 16;
    end // else: !if(req_item_to_be_sent.HBURST !== SINGLE )
    else begin
-      if(req_item_to_be_sent.HBURST == INCR) begin
+      if(req_item_to_be_sent.HBURST == param_enums::INCR) begin
 	 is_burst = 1;
 	 is_wrapping_burst = 0;
 	 std::randomize(no_of_transfers) with {no_of_transfers inside {[1:50]};};
@@ -93,21 +93,21 @@ endfunction : set_data_items
 //-----------------------SET_SIZE_INCREMENT_VALUES------------------------------
 
 function void NONSEQ_state::set_size_increment_values;
-   if(req_item_to_be_sent.HSIZE == BYTE)
+   if(req_item_to_be_sent.HSIZE == param_enums::BYTE)
      size_increment = 8'h01;
-   if(req_item_to_be_sent.HSIZE == HALF_WORD)
+   if(req_item_to_be_sent.HSIZE == param_enums::HALF_WORD)
      size_increment = 8'h02;
-   if(req_item_to_be_sent.HSIZE == WORD)
+   if(req_item_to_be_sent.HSIZE == param_enums::WORD)
      size_increment = 8'h04;
-   if(req_item_to_be_sent.HSIZE == DOUBLE_WORD)
+   if(req_item_to_be_sent.HSIZE == param_enums::DOUBLE_WORD)
      size_increment = 8'h08;
-   if(req_item_to_be_sent.HSIZE == FOUR_WORD_LINE)
+   if(req_item_to_be_sent.HSIZE == param_enums::FOUR_WORD_LINE)
      size_increment = 8'h0F;
-   if(req_item_to_be_sent.HSIZE == EIGHT_WORD_LINE)
+   if(req_item_to_be_sent.HSIZE == param_enums::EIGHT_WORD_LINE)
      size_increment = 8'h20;
-   if(req_item_to_be_sent.HSIZE == FIVE_TWELVE)
+   if(req_item_to_be_sent.HSIZE == param_enums::FIVE_TWELVE)
      size_increment = 8'h40;
-   if(req_item_to_be_sent.HSIZE == FIVE_TWELVE)
+   if(req_item_to_be_sent.HSIZE == param_enums::FIVE_TWELVE)
      size_increment = 8'h80;
 endfunction : set_size_increment_values
 
@@ -127,10 +127,10 @@ endfunction : perform_action
 
 function bit[1:0] NONSEQ_state::determine_and_change_to_next_state;
     if(no_of_transfers > 1) begin
-        std::randomize(next_state) with {next_state inside {SEQ, BUSY};};
+        std::randomize(next_state) with {next_state inside {param_enums::SEQ, param_enums::BUSY};};
     end // if it is a burst transfer, go next to BUSY or SEQ state, irrespective of previous state
     else begin
-        std::randomize(next_state) with {next_state inside {IDLE, NONSEQ};};
+        std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ};};
     end
 
     return next_state;
@@ -146,7 +146,7 @@ endfunction : determine_and_change_to_next_state
 function NONSEQ_state::new(string name = "NONSEQ_state");
    super.new(name);
    no_of_transfers = 1;
-   next_state = IDLE;
+   next_state = param_enums::IDLE;
    is_wrapping_burst = 0;
    is_burst = 0;   
 endfunction
@@ -184,7 +184,7 @@ endfunction: do_compare
 function string NONSEQ_state::convert2string();
     string s;
     $sformatf(s, "%s\n", super.convert2string());
-    $sformatf(s, "%s\n No_OF_TRANSFERS\t%0d\n IS_BURST\t%b\n IS_WRAPPING_BURST\t%0b\n HADDR_BOUNDARY\t%0h\n SIZE_INCREMENT\t%0h\n HADDR_WRAP_START_ADDRESS\t%0h\n", s, is_burst, is_wrapping_burst, HADDR_boundary, size_increment, HADDR_wrap_start_address);
+    $sformatf(s, "%s\n No_OF_TRANSFERS\t%0d\n IS_BURST\t%b\n IS_WRAPPING_BURST\t%0b\n HADDR_BOUNDARY\t%0h\n SIZE_INCREMENT\t%0h\n HADDR_WRAP_START_ADDRESS\t%0h\n", s, no_of_transfers, is_burst, is_wrapping_burst, HADDR_boundary, size_increment, HADDR_wrap_start_address);
     return s;
 endfunction: convert2string
 
