@@ -96,7 +96,7 @@ function protocol_state_controller::new(string name = "protocol_state_controller
     super.new(name);
     current_state = param_enums::IDLE;
     next_state = param_enums::IDLE;
-    _state = IDLE_state::type_id::create("init_state");
+    _state = init_idle_state;
 endfunction
 
 function void protocol_state_controller::do_copy(uvm_object rhs);

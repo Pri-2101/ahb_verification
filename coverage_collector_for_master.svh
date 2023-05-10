@@ -4,7 +4,7 @@ import uvm_pkg::*;
 import env_pkg::*;
 import apb_slave_agent_pkg::apb_slave_setup_item;
 
-class coverage_collector_for_master extends uvm_subscriber #(uvm_sequence_item);
+class coverage_collector_for_master extends uvm_subscriber #(apb_slave_setup_item);
    `uvm_component_utils(coverage_collector_for_master)
 
    apb_slave_setup_item rcvd_txn;

@@ -19,6 +19,7 @@ function env_config::new(string name = "env_config");
     super.new(name);
     slave_agt_cfg = apb_slave_agent_config::type_id::create("apb_slave_agent_config");
     master_agt_cfg = apb_master_agent_config::type_id::create("apb_master_agent_config");
+    instantiate_coverage_collector_for_master = 1'b1;
 endfunction
 
 function env_config env_config::get_config(uvm_component c);

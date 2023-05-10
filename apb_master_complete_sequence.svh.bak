@@ -13,7 +13,6 @@ endclass : apb_master_complete_sequence
 
 function apb_master_complete_sequence::new(string name = "apb_master_complete_sequence");
    super.new(name);
-   state_controller = protocol_state_controller::type_id::create("state_controller");
 endfunction
 
 task apb_master_complete_sequence::body;
