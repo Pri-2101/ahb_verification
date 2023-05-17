@@ -14,7 +14,10 @@ interface apb_master_driver_bfm(
     input [31:0] HRDATA, //param this (comes from the MUX connected to all the slaves)
     input HREADY,
     input HRESP);
-    
+
+//   protocol_state_controller master_driver_state_controller = new("master_driver_state_controller");
+   
+   
     //import apb_master_agent_pkg::*;
     //`include "apb_master_seq_item.svh"
 
@@ -32,21 +35,31 @@ interface apb_master_driver_bfm(
     endtask : no_reset
 
     task setup_phase(apb_master_setup_item req);
-        @(posedge HCLK);
-        HADDR <= req.HADDR;
-        HWDATA <= req.HWDATA;
-        HWRITE <= req.HWRITE;
-        HBURST <= req.HBURST;
-        HSIZE <= req.HSIZE;
-        HTRANS <= req.HTRANS;
+       //master_driver_state_controller.req_item_action(this, req);
+       
+       @(posedge HCLK);
+       HADDR <= req.HADDR;
+       HWDATA <= req.HWDATA;
+       HWRITE <= req.HWRITE;
+       HBURST <= req.HBURST;
+       HSIZE <= req.HSIZE;
+       HTRANS <= req.HTRANS;
+
+       while(!HREADY == 1) begin
+	  @(posedge HCLK);
+       end
     endtask : setup_phase
 
     task access_phase(apb_master_access_item rsp);
-        @(posedge HCLK);
-        rsp.HRDATA <= HRDATA;
-        rsp.HRESP <= HRESP;
-        rsp.HREADY <= HREADY;
+       //master_driver_state_controller.rsp_item_action(this, rsp);
+       @(posedge HCLK);
+       while(!HREADY == 1) begin
+	  @(posedge HCLK);
+       end
+       
+       rsp.HRDATA <= HRDATA;
+       rsp.HRESP <= HRESP;
+       rsp.HREADY <= HREADY;
     endtask : access_phase
 
 endinterface : apb_master_driver_bfm
-
