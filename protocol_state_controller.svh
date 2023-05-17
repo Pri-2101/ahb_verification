@@ -47,12 +47,12 @@ function void protocol_state_controller::change_state(base_state next_state);
 endfunction : change_state
 
 function void protocol_state_controller::save_prev_req_item(apb_master_setup_item prev_req);
-   prev_req_item.copy(prev_req);
+   //prev_req_item.copy(prev_req);
    _state.save_prev_req_item(prev_req);
 endfunction : save_prev_req_item
 
 function void protocol_state_controller::save_prev_rsp_item(apb_master_access_item prev_rsp);
-   prev_rsp_item.copy(prev_rsp);
+   //prev_rsp_item.copy(prev_rsp);
    _state.save_prev_rsp_item(prev_rsp);
 endfunction : save_prev_rsp_item
 
@@ -118,11 +118,14 @@ function bit protocol_state_controller::do_compare(uvm_object rhs, uvm_comparer 
 endfunction : do_compare
 
 function string protocol_state_controller::convert2string();
-   //
+    string s;
+    $sformat(s, "%s\n", super.convert2string());
+    $sformat(s, "%s\n %s\n", s, _state.convert2string());
+    return s;
 endfunction : convert2string
 
 function void protocol_state_controller::do_print(uvm_printer printer);
-   //
+  printer.m_string = convert2string();
 endfunction : do_print
 
 function void protocol_state_controller::do_record(uvm_recorder recorder);

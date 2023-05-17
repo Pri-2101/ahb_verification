@@ -45,7 +45,7 @@ function void BUSY_state::perform_action(ref apb_master_setup_item current_req);
    set_data_items();
    update_transfer_variables();
 
-   current_req = req_item_to_be_sent;
+   current_req.copy(req_item_to_be_sent);
 endfunction : perform_action
 
 //-----------------------SET_DATA_ITEMS------------------------------

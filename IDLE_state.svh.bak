@@ -73,8 +73,8 @@ endfunction: do_compare
 
 function string IDLE_state::convert2string();
     string s;
-    $sformat(s, "%s\n", super.convert2string());
-    $sformat(s, "%s IDLE STATE", s);
+    $sformatf(s, "%s\n", super.convert2string());
+    $sformatf(s, "%s IDLE STATE", s);
     return s;
 endfunction: convert2string
 

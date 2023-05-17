@@ -29,11 +29,11 @@ task apb_master_complete_sequence::body;
       start_item(req);
       state_controller.perform_action(req);
       finish_item(req);
-      `uvm_info("Master_REQ_ITEM_SENT_TO_SLAVE", $sformatf("ITEM_%0d details are %s", i, req.convert2string()), UVM_LOW);
-
+      //`uvm_info("Master_REQ_ITEM_SENT_TO_SLAVE", $sformatf("ITEM_%0d details are %s", i, req.convert2string()), UVM_LOW);
+      `uvm_info("CURRENT STATE", $sformatf("\nThe current state is %s", state_controller.convert2string()), UVM_LOW);
       start_item(rsp);
       finish_item(rsp);
-      `uvm_info("Master_RSP_ITEM_RCVD_FROM_SLAVE", $sformatf("ITEM_%0d details are %s", i, rsp.convert2string()), UVM_LOW);
+      //`uvm_info("Master_RSP_ITEM_RCVD_FROM_SLAVE", $sformatf("ITEM_%0d details are %s", i, rsp.convert2string()), UVM_LOW);
 
       state_controller.save_prev_req_item(req);
       state_controller.save_prev_rsp_item(rsp);
