@@ -70,7 +70,6 @@ task apb_master_driver::do_pipelined_transfer;
 
       pipeline_lock_rsp.get();
             rsp = apb_master_access_item::type_id::create("rsp");
-	    rsp.set_id_info(req);
 	  //if($cast(rsp, item)) begin
 	    accept_tr(rsp, $time);
 	    void'(begin_tr(rsp, "apb_master_driver"));

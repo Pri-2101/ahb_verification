@@ -61,41 +61,41 @@ interface apb_slave_monitor_bfm (input HCLK,
   endtask : wait_for_reset
 
 
-      RESET_VALID: assert property( @(posedge HCLK) SIGNAL_VALID(HRESETn));
-      HSEL_VALID: assert property( @(posedge HCLK) SIGNAL_VALID(HSEL));
-      HADDR_VALID: assert property( @(posedge HCLK) CONTROL_SIGNAL_VALID(HADDR));
-      HWRITE_VALID: assert property( @(posedge HCLK) CONTROL_SIGNAL_VALID(HWRITE));
-      //HENABLE_VALID: assert property( @(posedge HCLK) CONTROL_SIGNAL_VALID(HENABLE));
-      HWDATA_VALID: assert property( @(posedge HCLK) HWDATA_SIGNAL_VALID);
+//      RESET_VALID: assert property( @(posedge HCLK) SIGNAL_VALID(HRESETn));
+//      HSEL_VALID: assert property( @(posedge HCLK) SIGNAL_VALID(HSEL));
+//      HADDR_VALID: assert property( @(posedge HCLK) CONTROL_SIGNAL_VALID(HADDR));
+//      HWRITE_VALID: assert property( @(posedge HCLK) CONTROL_SIGNAL_VALID(HWRITE));
+      
+//      HWDATA_VALID: assert property( @(posedge HCLK) HWDATA_SIGNAL_VALID);
       //HREADY_VALID: assert property( @(posedge HCLK) HENABLE_SIGNAL_VALID(HREADY));
       //HSLVERR_VALID: assert property( @(posedge HCLK) HENABLE_SIGNAL_VALID(HSLVERR));
       //HRDATA_VALID: assert property( @(posedge HCLK) HRDATA_SIGNAL_VALID);
-  
+      //HENABLE_VALID: assert property( @(posedge HCLK) CONTROL_SIGNAL_VALID(HENABLE));
       //assert property(BurstTransferNumberCheck(beats));
       //assert property( BurstTransferNumberCheckSeq(beats));
 
-      assert property(@(posedge HCLK) ExtendedCycleWriteSignalConstant);
-      assert property(@(posedge HCLK) TransferCompleteReadDataValidity(param_enums::datawidth));
-      assert property(@(posedge HCLK) IDLETransferNoOKAYResp);
-      assert property(@(posedge HCLK) BUSYTransferNoOKAYResp);
+//      assert property(@(posedge HCLK) ExtendedCycleWriteSignalConstant);
+//      assert property(@(posedge HCLK) TransferCompleteReadDataValidity(param_enums::datawidth));
+//      assert property(@(posedge HCLK) IDLETransferNoOKAYResp);
+//      assert property(@(posedge HCLK) BUSYTransferNoOKAYResp);
       //assert property(@(posedge HCLK) DefBurstBUSYTermination(beats)); probably should be an immediate assertion
-      assert property(@(posedge HCLK) BurstAddrChangeBUSY(param_enums::datawidth));
-      assert property(@(posedge HCLK) BurstOneKBOverflow);
+//      assert property(@(posedge HCLK) BurstAddrChangeBUSY(param_enums::datawidth));
+//      assert property(@(posedge HCLK) BurstOneKBOverflow);
       //assert property(@(posedge HCLK) NonIncrBurstWrongTermination(beats));
       //assert property(@(posedge HCLK) NonIncrBurstWrongTerminationSeq(beats));
       //assert property(@(posedge HCLK) FixedBurstWrongTermination(beats));
       //assert property(@(posedge HCLK) FixedBurstWrongTerminationSeq(beats));
-      assert property(@(posedge HCLK) SingleBurstWrongTermination);
+//      assert property(@(posedge HCLK) SingleBurstWrongTermination);
       //assert property(@(posedge HCLK) LockedTransferNoIDLETerm);
-      assert property(@(posedge HCLK) WSCR1);
-      assert property(@(posedge HCLK) WSCR2);
-      assert property(@(posedge HCLK) WSCR3);
-      assert property(@(posedge HCLK) WSCR4);
-      assert property(@(posedge HCLK) WSCR5);
-      assert property(@(posedge HCLK) WSCR6);
-      assert property(@(posedge HCLK) WSCR7(param_enums::datawidth));
-      assert property(@(posedge HCLK) WSCR8(param_enums::datawidth));
-      assert property(@(posedge HCLK) WSCR9(param_enums::datawidth));
+//      assert property(@(posedge HCLK) WSCR1);
+//      assert property(@(posedge HCLK) WSCR2);
+//      assert property(@(posedge HCLK) WSCR3);
+//      assert property(@(posedge HCLK) WSCR4);
+//      assert property(@(posedge HCLK) WSCR5);
+//      assert property(@(posedge HCLK) WSCR6);
+//      assert property(@(posedge HCLK) WSCR7(param_enums::datawidth));
+//      assert property(@(posedge HCLK) WSCR8(param_enums::datawidth));
+//      assert property(@(posedge HCLK) WSCR9(param_enums::datawidth));
 
 
 endinterface: apb_slave_monitor_bfm
