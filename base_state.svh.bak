@@ -52,6 +52,9 @@ endfunction: save_prev_rsp_item
 function base_state::new(string name = "base_state");
    super.new(name);
    next_state = param_enums::IDLE;
+   req_item_to_be_sent = new;
+   prev_req_item = new;
+   prev_rsp_item = new;
 endfunction
 
 function void base_state::do_copy(uvm_object rhs);
@@ -75,8 +78,7 @@ endfunction: do_compare
 function string base_state::convert2string();
    string s;
    $sformat(s, "%s\n", super.convert2string());
-   $sformat(s, "%s\n Previous REQ item is %s\n Previous RSP item is %s\n req_item_to_be_sent is %s\n", s, prev_req_item.convert2string(), prev_rsp_item.convert2string(), req_item_to_be_sent.convert2string());
-   return s;
+   $sformat(s, "%s\n Previous REQ item is %s\n Previous RSP item is %s", s, prev_req_item.convert2string(), prev_rsp_item.convert2string()); 
 endfunction: convert2string
 
 function void base_state::do_print(uvm_printer printer);

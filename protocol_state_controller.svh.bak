@@ -71,7 +71,7 @@ function void protocol_state_controller::determine_and_change_to_next_state();
     if(next_state == param_enums::NONSEQ) begin
         current_state = param_enums::NONSEQ;
         nonseq_state_h = NONSEQ_state::type_id::create("nonseq_state_h");
-        $cast(nonseq_state_h, _state);
+        _state = nonseq_state_h;
     end
 
     if(next_state == param_enums::SEQ) begin
@@ -125,7 +125,7 @@ function string protocol_state_controller::convert2string();
 endfunction : convert2string
 
 function void protocol_state_controller::do_print(uvm_printer printer);
-   //
+  printer.m_string = convert2string();
 endfunction : do_print
 
 function void protocol_state_controller::do_record(uvm_recorder recorder);

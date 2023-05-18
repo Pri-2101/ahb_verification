@@ -12,7 +12,7 @@ class base_test extends uvm_test;
     extern function void build_phase(uvm_phase phase);
     extern task run_phase(uvm_phase phase);
     // at end_of_elaboration, print topology and factory state to verify 
-    virtual function void end_of_elaboration_phase(uvm_phase phase);
+    virtual function void base_test::end_of_elaboration_phase(uvm_phase phase);
         uvm_top.print_topology();
     endfunction
     //extern function report_phase(uvm_phase phase);

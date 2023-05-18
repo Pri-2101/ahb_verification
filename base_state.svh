@@ -78,7 +78,7 @@ endfunction: do_compare
 function string base_state::convert2string();
    string s;
    $sformat(s, "%s\n", super.convert2string());
-   $sformat(s, "%s\n Previous REQ item is %s\n Previous RSP item is %s\n req_item_to_be_sent is %s\n", s, prev_req_item.convert2string(), prev_rsp_item.convert2string(), req_item_to_be_sent.convert2string());
+   $sformat(s, "%s\n Previous REQ item is %s\n Previous RSP item is %s", s, prev_req_item.convert2string(), prev_rsp_item.convert2string()); 
    return s;
 endfunction: convert2string
 

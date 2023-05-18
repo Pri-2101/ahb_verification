@@ -35,7 +35,7 @@ task apb_slave_single_trans_sequence::body;
 	else
     	    rsp.HWRITE = req.HWRITE;
         finish_item(rsp);
-        `uvm_info("Slave_RSP_ITEM_SENT_TO_MASTER", $sformatf("RSP_ITEM_%0d_SENT_TO_MASTER is %s", i+1, rsp.convert2string()), UVM_LOW);
+        //`uvm_info("Slave_RSP_ITEM_SENT_TO_MASTER", $sformatf("RSP_ITEM_%0d_SENT_TO_MASTER is %s", i+1, rsp.convert2string()), UVM_LOW);
 
     end
 

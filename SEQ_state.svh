@@ -116,7 +116,7 @@ function void SEQ_state::do_copy(uvm_object rhs);
    SEQ_state rhs_seq;
    BUSY_state rhs_busy;
 
-   if(!$cast(rhs_nonseq, rhs)) begin
+   if($cast(rhs_nonseq, rhs)) begin
        this.no_of_transfers = rhs_nonseq.no_of_transfers - 1;
        this.is_burst = rhs_nonseq.is_burst;
        this.is_wrapping_burst = rhs_nonseq.is_wrapping_burst;
@@ -126,7 +126,7 @@ function void SEQ_state::do_copy(uvm_object rhs);
        this.transfer_not_complete = 1;
    end
 
-   if(!$cast(rhs_seq, rhs)) begin
+   if($cast(rhs_seq, rhs)) begin
        this.no_of_transfers = rhs_seq.no_of_transfers;
        this.is_burst = rhs_seq.is_burst;
        this.is_wrapping_burst = rhs_seq.is_wrapping_burst;
@@ -136,7 +136,7 @@ function void SEQ_state::do_copy(uvm_object rhs);
        this.transfer_not_complete = 1;
    end
 
-    if(!$cast(rhs_busy, rhs)) begin
+    if($cast(rhs_busy, rhs)) begin
        this.no_of_transfers = rhs_busy.no_of_transfers;
        this.is_burst = rhs_busy.is_burst;
        this.is_wrapping_burst = rhs_busy.is_wrapping_burst;
@@ -166,8 +166,8 @@ endfunction: do_compare
 
 function string SEQ_state::convert2string();
     string s;
-    $sformatf(s, "%s\n", super.convert2string());
-    $sformatf(s, "%s\n TRANSFER_NOT_COMPLETE\t%0b\n No_OF_TRANSFERS\t%0d\n IS_BURST\t%b\n IS_WRAPPING_BURST\t%0b\n HADDR_BOUNDARY\t%0h\n SIZE_INCREMENT\t%0h\n HADDR_WRAP_START_ADDRESS\t%0h\n", s, transfer_not_complete, no_of_transfers, is_burst, is_wrapping_burst, HADDR_boundary, size_increment, HADDR_wrap_start_address);
+    $sformat(s, "%s\n", super.convert2string());
+    $sformat(s, "SEQ STATE \n%s\n TRANSFER_NOT_COMPLETE\t%0b\n No_OF_TRANSFERS\t%0d\n IS_BURST\t%b\n IS_WRAPPING_BURST\t%0b\n HADDR_BOUNDARY\t%0h\n SIZE_INCREMENT\t%0h\n HADDR_WRAP_START_ADDRESS\t%0h\n", s, transfer_not_complete, no_of_transfers, is_burst, is_wrapping_burst, HADDR_boundary, size_increment, HADDR_wrap_start_address);
     return s;
 endfunction: convert2string
 

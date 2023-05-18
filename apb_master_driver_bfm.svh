@@ -57,9 +57,9 @@ interface apb_master_driver_bfm(
 	  @(posedge HCLK);
        end
        
-       rsp.HRDATA <= HRDATA;
-       rsp.HRESP <= HRESP;
-       rsp.HREADY <= HREADY;
+       rsp.HRDATA = HRDATA;
+       rsp.HRESP = HRESP;
+       rsp.HREADY = HREADY;
     endtask : access_phase
 
 endinterface : apb_master_driver_bfm

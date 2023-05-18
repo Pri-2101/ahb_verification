@@ -31,12 +31,14 @@ function void IDLE_state::set_data_items;
  req_item_to_be_sent.HSIZE = param_enums::WORD;
  req_item_to_be_sent.HWRITE = 1'b0;
  req_item_to_be_sent.HWDATA = 32'h0000_0000;
+ req_item_to_be_sent.HBURST = param_enums::SINGLE;
 endfunction : set_data_items
 
 //-----------------------DETERMINE_AND_CHANGE_TO_NEXT_STATE---------------------
 function bit[1:0] IDLE_state::determine_and_change_to_next_state();
-    if((prev_req_item.HTRANS == param_enums::IDLE) && (prev_rsp_item.HREADY == param_enums::HIGH) && (prev_rsp_item.HRESP = param_enums::OKAY)) begin
+    if((prev_req_item.HTRANS == param_enums::IDLE) && (prev_rsp_item.HREADY == param_enums::HIGH) && (prev_rsp_item.HRESP == param_enums::OKAY)) begin
         std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ};};
+        //$display(next_state);
     end
     else begin
         next_state = param_enums::IDLE;
@@ -74,7 +76,7 @@ endfunction: do_compare
 function string IDLE_state::convert2string();
     string s;
     $sformat(s, "%s\n", super.convert2string());
-    $sformat(s, "%s IDLE STATE", s);
+    $sformat(s, "IDLE STATE\n %s", s);
     return s;
 endfunction: convert2string
 
