@@ -14,6 +14,13 @@ import param_enums::*;
 //`include "apb_listener.svh"
 `include "apb_slave_agent.svh"
 
+ `include "slave_base_state.svh"
+ `include "LOW_ERROR_state.svh"
+ `include "HIGH_ERROR_state.svh"
+ `include "LOW_OKAY_state.svh"
+ `include "HIGH_OKAY_state.svh"
+ `include "slave_protocol_state_controller.svh"
+
 
 // Utility Sequences
 //`include "apb_slave_sequence.svh"

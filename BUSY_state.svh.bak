@@ -74,7 +74,7 @@ endfunction : set_data_items
 //-----------------------UPDATE_TRANSFER_VARIABLES------------------------------
 
 function void BUSY_state::update_transfer_variables;
-   no_of_transfers--;
+//   no_of_transfers--;
    if(no_of_transfers == 0) begin
       transfer_not_complete = 0;
    end

@@ -1,6 +1,6 @@
 import uvm_pkg::*;
 `include "uvm_macros.svh"
-import apb_master_agent_pkg::*;
+import apb_slave_agent_pkg::*;
 
 class HIGH_ERROR_state extends slave_base_state;
    `uvm_object_utils(HIGH_ERROR_state);
@@ -12,17 +12,17 @@ class HIGH_ERROR_state extends slave_base_state;
 //   extern function void set_size_increment_values;
    extern function void set_data_items;
    extern function bit[1:0] determine_and_change_to_next_state();
-   extern function void perform_action(ref apb_master_setup_item current_req);
+   extern function void perform_action(ref apb_slave_access_item current_rsp);
   
 //-----------------------------------------------------------------------------------
    //standard UVM object functions   
    extern function new(string name = "HIGH_ERROR_state");
    extern function void do_copy(uvm_object rhs);
-   extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
+   //extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
    extern function string convert2string();
    extern function void do_print(uvm_printer printer);
    extern function void do_record(uvm_recorder recorder);
-endclass : NONSEQ_state
+endclass : HIGH_ERROR_state
 
 //-----------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------
@@ -69,7 +69,7 @@ function void HIGH_ERROR_state::do_copy(uvm_object rhs);
 //
 endfunction : do_copy
 
-function bit HIGH_ERROR_state::do_compare(uvm_object rhs, uvm_comparer comparer);
+function string HIGH_ERROR_state::convert2string();
    string s;
    $sformat(s, "%s\n", super.convert2string());
    $sformat(s, "%s\n HIGH_ERROR_state", s);

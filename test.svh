@@ -74,14 +74,14 @@ endfunction : upload_config_to_DB
 
 task base_test::run_phase(uvm_phase phase);
     //apb_master_single_trans_sequence single_trans_seq = apb_master_single_trans_sequence::type_id::create("single_trans_seq");
-    apb_master_complete_sequence master_complete_seq = apb_master_complete_sequence::type_id::create("master_complete_trans_seq");
-    apb_slave_single_trans_sequence slave_single_trans_seq = apb_slave_single_trans_sequence::type_id::create("slave_single_trans_seq");
+    apb_master_complete_sequence master_complete_seq = apb_master_complete_sequence::type_id::create("master_complete_seq");
+    apb_slave_complete_sequence slave_complete_seq = apb_slave_complete_sequence::type_id::create("slave_complete_seq");
 
     phase.raise_objection(this);
     fork
         //single_trans_seq.start(my_env.master_agent.master_sequencer);
         master_complete_seq.start(my_env.master_agent.master_sequencer);
-        slave_single_trans_seq.start(my_env.slave_agent.slave_sequencer);
+        slave_complete_seq.start(my_env.slave_agent.slave_sequencer);
         #10000;
     join_any
     phase.drop_objection(this);

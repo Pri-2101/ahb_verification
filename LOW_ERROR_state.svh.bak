@@ -69,7 +69,7 @@ function void LOW_ERROR_state::do_copy(uvm_object rhs);
 //
 endfunction : do_copy
 
-function string LOW_ERROR_state::convert2string();
+function string LOW_ERROR_state:convert2string();
    string s;
    $sformat(s, "%s\n", super.convert2string());
    $sformat(s, "%s\n LOW_ERROR_state", s);

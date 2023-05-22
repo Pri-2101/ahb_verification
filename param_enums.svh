@@ -13,7 +13,7 @@ typedef enum bit {HIGH = 1'b1, LOW = 1'b0} HREADY_enum;
 
 typedef enum int {datawidth = 32} line_width_enum;
 
-typedef enum bit[1:0] {HIGH_OKAY = 2'b10, LOW_OKAY = 2'b00, HIGH_ERROR = 2'b11, LOW_ERROR = 2'b01} slave_rsp_enum
+typedef enum bit[1:0] {HIGH_OKAY = 2'b10, LOW_OKAY = 2'b00, HIGH_ERROR = 2'b11, LOW_ERROR = 2'b01} slave_rsp_enum;
 
 HREADY_enum hready_enum;
 HRESP_enum hresp_enums;	     

@@ -11,7 +11,7 @@ package env_pkg;
     `include "env.svh"
     `include "apb_master_single_trans_sequence.svh"
     `include "apb_master_INCR_sequence.svh"
-    `include "apb_slave_single_trans_sequence.svh"
+    `include "apb_slave_complete_sequence.svh"
     `include "apb_master_complete_sequence.svh"
 
 

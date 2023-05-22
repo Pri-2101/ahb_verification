@@ -115,8 +115,8 @@ function void SEQ_state::do_copy(uvm_object rhs);
    NONSEQ_state rhs_nonseq;
    SEQ_state rhs_seq;
    BUSY_state rhs_busy;
-
-   if($cast(rhs_nonseq, rhs)) begin
+   $cast(rhs_nonseq, rhs);
+//   if($cast(rhs_nonseq, rhs)) begin
        this.no_of_transfers = rhs_nonseq.no_of_transfers - 1;
        this.is_burst = rhs_nonseq.is_burst;
        this.is_wrapping_burst = rhs_nonseq.is_wrapping_burst;
@@ -124,28 +124,28 @@ function void SEQ_state::do_copy(uvm_object rhs);
        this.size_increment = rhs_nonseq.size_increment;
        this.HADDR_wrap_start_address = rhs_nonseq.HADDR_wrap_start_address;
        this.transfer_not_complete = 1;
-   end
+ //  end
 
-   if($cast(rhs_seq, rhs)) begin
-       this.no_of_transfers = rhs_seq.no_of_transfers;
-       this.is_burst = rhs_seq.is_burst;
-       this.is_wrapping_burst = rhs_seq.is_wrapping_burst;
-       this.HADDR_boundary = rhs_seq.HADDR_boundary;
-       this.size_increment = rhs_seq.size_increment;
-       this.HADDR_wrap_start_address = rhs_seq.HADDR_wrap_start_address;
-       this.transfer_not_complete = 1;
-   end
-
-    if($cast(rhs_busy, rhs)) begin
-       this.no_of_transfers = rhs_busy.no_of_transfers;
-       this.is_burst = rhs_busy.is_burst;
-       this.is_wrapping_burst = rhs_busy.is_wrapping_burst;
-       this.HADDR_boundary = rhs_busy.HADDR_boundary;
-       this.size_increment = rhs_busy.size_increment;
-       this.HADDR_wrap_start_address = rhs_busy.HADDR_wrap_start_address;
-       this.transfer_not_complete = 1;
-   end
-   
+//   if($cast(rhs_seq, rhs)) begin
+//       this.no_of_transfers = rhs_seq.no_of_transfers;
+//       this.is_burst = rhs_seq.is_burst;
+//       this.is_wrapping_burst = rhs_seq.is_wrapping_burst;
+//       this.HADDR_boundary = rhs_seq.HADDR_boundary;
+//       this.size_increment = rhs_seq.size_increment;
+//       this.HADDR_wrap_start_address = rhs_seq.HADDR_wrap_start_address;
+//       this.transfer_not_complete = 1;
+//   end
+//
+//    if($cast(rhs_busy, rhs)) begin
+//       this.no_of_transfers = rhs_busy.no_of_transfers;
+//       this.is_burst = rhs_busy.is_burst;
+//       this.is_wrapping_burst = rhs_busy.is_wrapping_burst;
+//       this.HADDR_boundary = rhs_busy.HADDR_boundary;
+//       this.size_increment = rhs_busy.size_increment;
+//       this.HADDR_wrap_start_address = rhs_busy.HADDR_wrap_start_address;
+//       this.transfer_not_complete = 1;
+//   end
+//   
 endfunction : do_copy
 
 function bit SEQ_state::do_compare(uvm_object rhs, uvm_comparer comparer);

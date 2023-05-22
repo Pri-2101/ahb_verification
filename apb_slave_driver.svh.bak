@@ -2,7 +2,7 @@ import uvm_pkg::*;
 import apb_slave_agent_pkg::*;
 `include "uvm_macros.svh"
 
-class apb_slave_driver extends uvm_driver #(uvm_sequence_item, uvm_sequence_item);
+class apb_slave_driver extends uvm_driver #(apb_slave_access_item, apb_slave_setup_item);
 
   `uvm_component_utils(apb_slave_driver)
 
@@ -29,21 +29,18 @@ task apb_slave_driver::run_phase(uvm_phase phase);
   uvm_sequence_item item;
   apb_slave_setup_item req;
   apb_slave_access_item rsp;
-
-  //slave_driver_bfm.reset();
   
   forever begin
-    // Setup Phase
-    seq_item_port.get_next_item(item);
-    assert ($cast(req, item));
-    slave_driver_bfm.setup_phase(req); 
+
+    seq_item_port.get_next_item(rsp);
+        slave_driver_bfm.access_phase(rsp); 
     seq_item_port.item_done();
 
-    // Access Phase
-    seq_item_port.get_next_item(item);
-    assert ($cast(rsp, item));
-    slave_driver_bfm.access_phase(rsp);
-    seq_item_port.item_done();
+
+    req = apb_slave_setup_item::type_id::create("req");
+    req.set_id_info(rsp);
+        slave_driver_bfm.setup_phase(req);
+    seq_item_port.put(rreq);
   end
 
 endtask: run_phase
