@@ -34,7 +34,6 @@ module hdl_top;
 
     assign HSEL[31:1] = 0;
     assign HSEL[0] = 1;
-    assign HRESETn = 1;
 
 
     initial begin

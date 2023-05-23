@@ -118,19 +118,23 @@ endfunction
 //-----------------------DO_COPY------------------------------
 
 function void BUSY_state::do_copy(uvm_object rhs);
-   NONSEQ_state rhs_nonseq;
-   SEQ_state rhs_seq;
-   BUSY_state rhs_busy;
+   NONSEQ_state rhs_nonseq = NONSEQ_state::type_id::create("rhs_nonseq");
+   SEQ_state rhs_seq = SEQ_state::type_id::create("rhs_seq");
+   BUSY_state rhs_busy = BUSY_state::type_id::create("rhs_busy");
 //$cast(rhs_nonseq, rhs);
    if($cast(rhs_nonseq, rhs)) begin
       $cast(rhs_nonseq, rhs);
+      //`uvm_info("Do_Copy_Print", $sformatf("%s", rhs_nonseq.convert2string()), UVM_LOW);
       this.no_of_transfers = rhs_nonseq.no_of_transfers;
       this.is_burst = rhs_nonseq.is_burst;
       this.is_wrapping_burst = rhs_nonseq.is_wrapping_burst;
+      
       this.HADDR_boundary = rhs_nonseq.HADDR_boundary;
       this.size_increment = rhs_nonseq.size_increment;
       this.HADDR_wrap_start_address = rhs_nonseq.HADDR_wrap_start_address;
       this.transfer_not_complete = 1;
+
+      this.req_item_to_be_sent.copy(rhs_nonseq.req_item_to_be_sent);
    end
 
    if($cast(rhs_seq, rhs)) begin
@@ -138,10 +142,13 @@ function void BUSY_state::do_copy(uvm_object rhs);
       this.no_of_transfers = rhs_seq.no_of_transfers;
       this.is_burst = rhs_seq.is_burst;
       this.is_wrapping_burst = rhs_seq.is_wrapping_burst;
+      
       this.HADDR_boundary = rhs_seq.HADDR_boundary;
       this.size_increment = rhs_seq.size_increment;
       this.HADDR_wrap_start_address = rhs_seq.HADDR_wrap_start_address;
       this.transfer_not_complete = 1;
+
+      this.req_item_to_be_sent.copy(rhs_seq.req_item_to_be_sent);
    end
 
    if($cast(rhs_busy, rhs)) begin
@@ -149,10 +156,13 @@ function void BUSY_state::do_copy(uvm_object rhs);
       this.no_of_transfers = rhs_busy.no_of_transfers;
       this.is_burst = rhs_busy.is_burst;
       this.is_wrapping_burst = rhs_busy.is_wrapping_burst;
+      
       this.HADDR_boundary = rhs_busy.HADDR_boundary;
       this.size_increment = rhs_busy.size_increment;
       this.HADDR_wrap_start_address = rhs_busy.HADDR_wrap_start_address;
       this.transfer_not_complete = 1;
+
+      this.req_item_to_be_sent.copy(rhs_busy.req_item_to_be_sent);
    end
    
 endfunction : do_copy

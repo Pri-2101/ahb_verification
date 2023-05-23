@@ -5,7 +5,7 @@ import apb_master_agent_pkg::*;
 virtual class base_state extends uvm_object;
    `uvm_object_utils(base_state);
 
-   protected rand apb_master_setup_item req_item_to_be_sent;
+   rand apb_master_setup_item req_item_to_be_sent;
    protected bit[1:0] next_state;
 
    protected apb_master_setup_item prev_req_item;

@@ -31,7 +31,7 @@ task apb_slave_complete_sequence::body;
       start_item(rsp);
       state_controller.perform_action(rsp);
       finish_item(rsp);
-      //`uvm_info("Slave_RSP_ITEM_SENT_TO_MASTER", $sformatf("ITEM_%0d details are %s", i, req.convert2string()), UVM_LOW);
+      `uvm_info("Slave_RSP_ITEM_SENT_TO_MASTER", $sformatf("ITEM_%0d details are %s", i, rsp.convert2string()), UVM_LOW);
 
       get_response(req);
       //`uvm_info("Slave_REQ_ITEM_RCVD_FROM_MASTER", $sformatf("ITEM_%0d details are %s", i, req.convert2string()), UVM_LOW);

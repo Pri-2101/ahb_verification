@@ -79,6 +79,7 @@ function string base_state::convert2string();
    string s;
    $sformat(s, "%s\n", super.convert2string());
    $sformat(s, "%s\n Previous REQ item is %s\n Previous RSP item is %s", s, prev_req_item.convert2string(), prev_rsp_item.convert2string()); 
+   return s;
 endfunction: convert2string
 
 function void base_state::do_print(uvm_printer printer);
