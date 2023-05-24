@@ -67,7 +67,7 @@ endclass : coverage_collector_for_master
 
 function coverage_collector_for_master::new(string name = "coverage_collector_for_master", uvm_component parent = null);
    super.new(name, parent);
-   rcvd_txn = new();
+   //rcvd_txn = new();
 
    //instantiating the covergroup variables here
    HTRANS_covergroup = new;
@@ -83,7 +83,7 @@ function void coverage_collector_for_master::write(T t);
         `uvm_error("cast_error", "Could not cast RHS object into apb_slave_seq_item type");
    end
 
-   rcvd_txn.copy(t);
+   $cast(rcvd_txn,t);
 
    HTRANS_covergroup.sample();
    HBURST_covergroup.sample();

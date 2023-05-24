@@ -84,18 +84,18 @@ endfunction : update_transfer_variables
 //-----------------------DETERMINE_AND_CHANGE_TO_NEXT_STATE----------------------
 function bit[1:0] BUSY_state::determine_and_change_to_next_state;
    //We are only talking about multiple burst transfers, as the any transfer must start with a NONSEQ transfer type
-    if(no_of_transfers > 1) begin
+    if(no_of_transfers >= 1) begin
 	    if(prev_req_item.HTRANS == param_enums::NONSEQ) begin
-	       std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::SEQ, param_enums::BUSY};};
+	       std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::SEQ, param_enums::BUSY}; next_state dist {param_enums::IDLE := 6, param_enums::SEQ := 150, param_enums::BUSY := 15};};
     	    end
 	    else begin
 	        if(prev_req_item.HTRANS == param_enums::SEQ) begin
-	            std::randomize(next_state) with {next_state inside {param_enums::SEQ, param_enums::BUSY};};
+	            std::randomize(next_state) with {next_state inside {param_enums::SEQ, param_enums::BUSY}; next_state dist {param_enums::SEQ := 150, param_enums::BUSY := 20};};
 	        end
   	    end
     end
     else begin
-        std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ};};
+        std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ}; next_state dist {param_enums::IDLE := 40, param_enums::NONSEQ := 10};};
     end
 
     return next_state;

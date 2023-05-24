@@ -35,11 +35,12 @@ task apb_slave_complete_sequence::body;
 
       get_response(req);
       //`uvm_info("Slave_REQ_ITEM_RCVD_FROM_MASTER", $sformatf("ITEM_%0d details are %s", i, req.convert2string()), UVM_LOW);
-      
+
+      state_controller.determine_and_change_to_next_state();      
       state_controller.save_prev_req_item(req);
       state_controller.save_prev_rsp_item(rsp);
       //`uvm_info("CURRENT STATE", $sformatf("\nThe state is %s", state_controller.convert2string()), UVM_LOW);
-      state_controller.determine_and_change_to_next_state();
+      
 
    end // forever begin
    

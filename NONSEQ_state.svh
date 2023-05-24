@@ -127,10 +127,10 @@ endfunction : perform_action
 
 function bit[1:0] NONSEQ_state::determine_and_change_to_next_state;
     if(no_of_transfers > 1) begin
-        std::randomize(next_state) with {next_state inside {param_enums::SEQ, param_enums::BUSY};};
+        std::randomize(next_state) with {next_state inside {param_enums::SEQ, param_enums::BUSY}; next_state dist {param_enums::SEQ := 200, param_enums::BUSY := 20};};
     end // if it is a burst transfer, go next to BUSY or SEQ state, irrespective of previous state
     else begin
-        std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ};};
+        std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ}; next_state dist {param_enums::IDLE := 60, param_enums::NONSEQ := 25};};
     end
 
     return next_state;

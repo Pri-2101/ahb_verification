@@ -12,7 +12,7 @@ class HIGH_OKAY_state extends slave_base_state;
 //   extern function void set_size_increment_values;
    extern function void set_data_items;
    extern function bit[1:0] determine_and_change_to_next_state();
-   extern function void perform_action(ref apb_slave_access_item current_req);
+   extern function void perform_action(ref apb_slave_access_item current_rsp);
   
 //-----------------------------------------------------------------------------------
    //standard UVM object functions   

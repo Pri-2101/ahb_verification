@@ -37,7 +37,8 @@ endfunction : set_data_items
 //-----------------------DETERMINE_AND_CHANGE_TO_NEXT_STATE---------------------
 function bit[1:0] IDLE_state::determine_and_change_to_next_state();
     if((prev_req_item.HTRANS == param_enums::IDLE) && (prev_rsp_item.HREADY == param_enums::HIGH) && (prev_rsp_item.HRESP == param_enums::OKAY)) begin
-        std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ};};
+        std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ};  next_state dist {param_enums::IDLE := 10, param_enums::NONSEQ := 60};};
+       
         //$display(next_state);
     end
     else begin

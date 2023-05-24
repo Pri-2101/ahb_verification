@@ -33,6 +33,8 @@ endclass : LOW_OKAY_state
 function void LOW_OKAY_state::set_data_items;
    rsp_item_to_be_sent.HREADY = param_enums::LOW;
    rsp_item_to_be_sent.HRESP = param_enums::OKAY;
+   if(prev_req_item.HWRITE == 1'b1)
+       rsp_item_to_be_sent.HRDATA = 32'h0;
 endfunction : set_data_items
 
 

@@ -18,7 +18,7 @@ class HIGH_ERROR_state extends slave_base_state;
    //standard UVM object functions   
    extern function new(string name = "HIGH_ERROR_state");
    extern function void do_copy(uvm_object rhs);
-   extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
+   //extern function bit do_compare(uvm_object rhs, uvm_comparer comparer);
    extern function string convert2string();
    extern function void do_print(uvm_printer printer);
    extern function void do_record(uvm_recorder recorder);

@@ -56,6 +56,7 @@ function void SEQ_state::set_data_items;
  req_item_to_be_sent.HWRITE = prev_req_item.HWRITE;
  req_item_to_be_sent.HBURST = prev_req_item.HBURST;
  req_item_to_be_sent.HSIZE = prev_req_item.HSIZE;
+ req_item_to_be_sent.HTRANS = param_enums::SEQ;
   //if slave wasn't ready, hold the data
  if(prev_rsp_item.HREADY == param_enums::LOW) begin
     req_item_to_be_sent.HADDR = prev_req_item.HADDR;
@@ -85,10 +86,10 @@ function bit[1:0] SEQ_state::determine_and_change_to_next_state;
    //We are only talking about multiple burst transfers, as the any transfer must start with a NONSEQ transfer type
     if(prev_req_item.HTRANS == param_enums::NONSEQ || prev_req_item.HTRANS == param_enums::SEQ) begin
         if(transfer_not_complete == 1) begin
-            std::randomize(next_state) with {next_state inside {param_enums::SEQ, param_enums::BUSY};};
+            std::randomize(next_state) with {next_state inside {param_enums::SEQ, param_enums::BUSY}; next_state dist {param_enums::SEQ := 90, param_enums::BUSY := 10};};
         end
         else begin  
-            std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ};};
+            std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ}; next_state dist {param_enums::IDLE := 70, param_enums::NONSEQ := 10};};
         end
     end
     

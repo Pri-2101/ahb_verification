@@ -86,10 +86,10 @@ function bit[1:0] SEQ_state::determine_and_change_to_next_state;
    //We are only talking about multiple burst transfers, as the any transfer must start with a NONSEQ transfer type
     if(prev_req_item.HTRANS == param_enums::NONSEQ || prev_req_item.HTRANS == param_enums::SEQ) begin
         if(transfer_not_complete == 1) begin
-            std::randomize(next_state) with {next_state inside {param_enums::SEQ, param_enums::BUSY};};
+            std::randomize(next_state) with {next_state inside {param_enums::SEQ, param_enums::BUSY}; next_state dist {param_enums::SEQ := 200, param_enums::BUSY := 10};};
         end
         else begin  
-            std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ};};
+            std::randomize(next_state) with {next_state inside {param_enums::IDLE, param_enums::NONSEQ}; next_state dist {param_enums::IDLE := 70, param_enums::NONSEQ := 10};};
         end
     end
     
