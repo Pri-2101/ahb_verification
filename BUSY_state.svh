@@ -55,6 +55,7 @@ function void BUSY_state::set_data_items;
  req_item_to_be_sent.HWRITE = prev_req_item.HWRITE;
  req_item_to_be_sent.HBURST = prev_req_item.HBURST;
  req_item_to_be_sent.HSIZE = prev_req_item.HSIZE;
+ req_item_to_be_sent.HTRANS = param_enums::BUSY;
   //if slave wasn't ready, hold the data
  if(prev_rsp_item.HREADY == param_enums::LOW) begin
     req_item_to_be_sent.HADDR = prev_req_item.HADDR;
@@ -134,7 +135,7 @@ function void BUSY_state::do_copy(uvm_object rhs);
       this.HADDR_wrap_start_address = rhs_nonseq.HADDR_wrap_start_address;
       this.transfer_not_complete = 1;
 
-      this.req_item_to_be_sent.copy(rhs_nonseq.req_item_to_be_sent);
+      //this.req_item_to_be_sent.copy(rhs_nonseq.req_item_to_be_sent);
    end
 
    if($cast(rhs_seq, rhs)) begin
@@ -148,7 +149,7 @@ function void BUSY_state::do_copy(uvm_object rhs);
       this.HADDR_wrap_start_address = rhs_seq.HADDR_wrap_start_address;
       this.transfer_not_complete = 1;
 
-      this.req_item_to_be_sent.copy(rhs_seq.req_item_to_be_sent);
+      //this.req_item_to_be_sent.copy(rhs_seq.req_item_to_be_sent);
    end
 
    if($cast(rhs_busy, rhs)) begin
@@ -162,7 +163,7 @@ function void BUSY_state::do_copy(uvm_object rhs);
       this.HADDR_wrap_start_address = rhs_busy.HADDR_wrap_start_address;
       this.transfer_not_complete = 1;
 
-      this.req_item_to_be_sent.copy(rhs_busy.req_item_to_be_sent);
+      //this.req_item_to_be_sent.copy(rhs_busy.req_item_to_be_sent);
    end
    
 endfunction : do_copy

@@ -36,8 +36,10 @@ interface apb_master_driver_bfm(
 
     task setup_phase(apb_master_setup_item req);
        //master_driver_state_controller.req_item_action(this, req);
-       
        @(posedge HCLK);
+       while(!HREADY == 1) begin
+	  @(posedge HCLK);
+       end
        HADDR <= req.HADDR;
        HWDATA <= req.HWDATA;
        HWRITE <= req.HWRITE;
@@ -45,9 +47,7 @@ interface apb_master_driver_bfm(
        HSIZE <= req.HSIZE;
        HTRANS <= req.HTRANS;
 
-       while(!HREADY == 1) begin
-	  @(posedge HCLK);
-       end
+
     endtask : setup_phase
 
     task access_phase(apb_master_access_item rsp);

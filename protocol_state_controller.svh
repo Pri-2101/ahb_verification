@@ -71,7 +71,7 @@ function void protocol_state_controller::determine_and_change_to_next_state();
     if(next_state == param_enums::NONSEQ) begin
         current_state = param_enums::NONSEQ;
         nonseq_state_h = NONSEQ_state::type_id::create("nonseq_state_h");
-        _state = nonseq_state_h;
+        $cast(_state,nonseq_state_h);
     end
 
     if(next_state == param_enums::SEQ) begin
@@ -85,7 +85,7 @@ function void protocol_state_controller::determine_and_change_to_next_state();
         if(current_state == param_enums::SEQ)
             seq_state_h.copy(SEQ_state'(_state));
 
-        _state = seq_state_h;
+        $cast(_state,seq_state_h);
         current_state = param_enums::SEQ;
     end   
 
@@ -101,9 +101,15 @@ function void protocol_state_controller::determine_and_change_to_next_state();
         if(current_state == param_enums::SEQ)
             busy_state_h.copy(SEQ_state'(_state));
  
-        _state = busy_state_h;
+        $cast(_state,busy_state_h);
         current_state = param_enums::BUSY;
     end
+
+   if(next_state == param_enums::IDLE) begin
+       idle_state_h = IDLE_state::type_id::create("idle_state_h");
+       current_state = param_enums::IDLE;
+       $cast(_state, idle_state_h);
+   end
             
 endfunction : determine_and_change_to_next_state
 

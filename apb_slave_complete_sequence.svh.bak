@@ -38,7 +38,7 @@ task apb_slave_complete_sequence::body;
       
       state_controller.save_prev_req_item(req);
       state_controller.save_prev_rsp_item(rsp);
-      `uvm_info("CURRENT STATE", $sformatf("\nThe state is %s", state_controller.convert2string()), UVM_LOW);
+      //`uvm_info("CURRENT STATE", $sformatf("\nThe state is %s", state_controller.convert2string()), UVM_LOW);
       state_controller.determine_and_change_to_next_state();
 
    end // forever begin
