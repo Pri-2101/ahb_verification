@@ -41,6 +41,9 @@ interface apb_slave_monitor_bfm (input HCLK,
         begin
           req.HADDR = HADDR;
           req.HWRITE = HWRITE;
+          req.HBURST = HBURST;
+          req.HTRANS = HTRANS;
+          req.HSIZE = HSIZE;
           if(HWRITE) req.HWDATA = HWDATA;
           $cast(cloned_req, req.clone()); //sending a clone of req rather than create a new req seq_item in the loop here and then reading values into it.
           proxy.notify_setup(cloned_req);
@@ -74,28 +77,59 @@ interface apb_slave_monitor_bfm (input HCLK,
       //assert property(BurstTransferNumberCheck(beats));
       //assert property( BurstTransferNumberCheckSeq(beats));
 
-      assert property(@(posedge HCLK) ExtendedCycleWriteSignalConstant);
-      assert property(@(posedge HCLK) TransferCompleteReadDataValidity(param_enums::datawidth));
-      assert property(@(posedge HCLK) IDLETransferNoOKAYResp);
-      assert property(@(posedge HCLK) BUSYTransferNoOKAYResp);
+      ASSERT_ExtendedCycleWriteSignalConstant : assert property(@(posedge HCLK) ExtendedCycleWriteSignalConstant);
+      COVER_ExtendedCycleWriteSignalConstant : cover property(@(posedge HCLK) ExtendedCycleWriteSignalConstant);
+
+      ASSERT_TransferCompleteReadDataValidity : assert property(@(posedge HCLK) TransferCompleteReadDataValidity(param_enums::datawidth));
+      COVER_TransferCompleteReadDataValidity : cover property(@(posedge HCLK) TransferCompleteReadDataValidity(param_enums::datawidth));      
+
+      ASSERT_IDLETransferNoOKAYResp : assert property(@(posedge HCLK) IDLETransferNoOKAYResp);
+      COVER_IDLETransferNoOKAYResp : cover property(@(posedge HCLK) IDLETransferNoOKAYResp);
+
+      ASSERT_BUSYTransferNoOKAYResp : assert property(@(posedge HCLK) BUSYTransferNoOKAYResp);
+      COVER_BUSYTransferNoOKAYResp : cover property(@(posedge HCLK) BUSYTransferNoOKAYResp);
+
       //assert property(@(posedge HCLK) DefBurstBUSYTermination(beats)); probably should be an immediate assertion
-      assert property(@(posedge HCLK) BurstAddrChangeBUSY(param_enums::datawidth));
-      assert property(@(posedge HCLK) BurstOneKBOverflow);
+      ASSERT_BurstAddrChangeBUSY : assert property(@(posedge HCLK) BurstAddrChangeBUSY(param_enums::datawidth));
+      COVER_BurstAddrChangeBUSY : cover property(@(posedge HCLK) BurstAddrChangeBUSY(param_enums::datawidth));
+
+      ASSERT_BurstOneKBOverflow : assert property(@(posedge HCLK) BurstOneKBOverflow);
+      COVER_BurstOneKBOverflow : cover property(@(posedge HCLK) BurstOneKBOverflow);
+
       //assert property(@(posedge HCLK) NonIncrBurstWrongTermination(beats));
       //assert property(@(posedge HCLK) NonIncrBurstWrongTerminationSeq(beats));
       //assert property(@(posedge HCLK) FixedBurstWrongTermination(beats));
       //assert property(@(posedge HCLK) FixedBurstWrongTerminationSeq(beats));
-      assert property(@(posedge HCLK) SingleBurstWrongTermination);
+      ASSERT_SingleBurstWrongTermination : assert property(@(posedge HCLK) SingleBurstWrongTermination);
+      COVER_SingleBurstWrongTermination : cover property(@(posedge HCLK) SingleBurstWrongTermination);
+
       //assert property(@(posedge HCLK) LockedTransferNoIDLETerm);
-      assert property(@(posedge HCLK) WSCR1);
-      assert property(@(posedge HCLK) WSCR2);
-      assert property(@(posedge HCLK) WSCR3);
-      assert property(@(posedge HCLK) WSCR4);
-      assert property(@(posedge HCLK) WSCR5);
-      assert property(@(posedge HCLK) WSCR6);
-      assert property(@(posedge HCLK) WSCR7(param_enums::datawidth));
-      assert property(@(posedge HCLK) WSCR8(param_enums::datawidth));
-      assert property(@(posedge HCLK) WSCR9(param_enums::datawidth));
+      ASSERT_WSCR1 : assert property(@(posedge HCLK) WSCR1);
+      COVER_WSCR1 : cover property(@(posedge HCLK) WSCR1);
+
+      ASSERT_WSCR2 : assert property(@(posedge HCLK) WSCR2);
+      COVER_WSCR2 : cover property(@(posedge HCLK) WSCR2);
+
+      ASSERT_WSCR3 : assert property(@(posedge HCLK) WSCR3);
+      COVER_WSCR3 : cover property(@(posedge HCLK) WSCR3);
+
+      ASSERT_WSCR4 : assert property(@(posedge HCLK) WSCR4);
+      COVER_WSCR4 : cover property(@(posedge HCLK) WSCR4);
+
+      ASSERT_WSCR5 : assert property(@(posedge HCLK) WSCR5);
+      COVER_WSCR5 : cover property(@(posedge HCLK) WSCR5);
+ 
+      ASSERT_WSCR6 : assert property(@(posedge HCLK) WSCR6);
+      COVER_WSCR6 : cover property(@(posedge HCLK) WSCR6);
+
+      ASSERT_WSCR7 : assert property(@(posedge HCLK) WSCR7(param_enums::datawidth));
+      COVER_WSCR7 : cover property(@(posedge HCLK) WSCR7(param_enums::datawidth));
+
+      ASSERT_WSCR8 : assert property(@(posedge HCLK) WSCR8(param_enums::datawidth));
+      COVER_WSCR8 : cover property(@(posedge HCLK) WSCR8(param_enums::datawidth));
+
+      ASSERT_WSCR9 : assert property(@(posedge HCLK) WSCR9(param_enums::datawidth));
+      COVER_WSCR9 : cover property(@(posedge HCLK) WSCR9(param_enums::datawidth));
 
 
 endinterface: apb_slave_monitor_bfm

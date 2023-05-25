@@ -29,8 +29,8 @@ function apb_slave_monitor::new(string name = "apb_slave_monitor", uvm_component
 endfunction
 
 function void apb_slave_monitor::build_phase(uvm_phase phase);
-  req_ap = new("setup_ap", this);
-  rsp_ap = new("access_ap", this);
+  req_ap = new("req_ap", this);
+  rsp_ap = new("rsp_ap", this);
   slave_agent_cfg = apb_slave_agent_config::get_config(this); //doing some basic error checking
   slave_monitor_bfm = slave_agent_cfg.slave_monitor_bfm; //Getting the BFM from the configuration object
   slave_monitor_bfm.set_apb_index(slave_agent_cfg.apb_index);

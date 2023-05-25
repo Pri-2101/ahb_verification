@@ -89,7 +89,7 @@ endproperty; // BurstAddrCalcWrong
 
 //implem - not (address changes during a BUSY transfer by the master)
 property BurstAddrChangeBUSY(datawidth);
-   !$stable(HTRANS) ##0 HTRANS == param_enums::BUSY ##0 ((HBURST !== param_enums::SINGLE) && (HBURST !== param_enums::INCR)) |-> ##1 $stable(HADDR)[*0:$] ##1 (HTRANS !== param_enums::BUSY);
+   !$stable(HTRANS) ##0 HTRANS == param_enums::BUSY ##0 ((HBURST !== param_enums::SINGLE) && (HBURST !== param_enums::INCR)) |-> ##1 $stable(HADDR, @(posedge HCLK))[*0:$] ##1 (HTRANS !== param_enums::BUSY);
 endproperty; // BurstAddrChangeBUSY
 
 

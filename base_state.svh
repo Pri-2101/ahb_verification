@@ -38,12 +38,12 @@ endclass : base_state
 //User Functions
 function void base_state::save_prev_req_item(apb_master_setup_item prev_req);
    prev_req_item.copy(prev_req);
-   `uvm_info("SAVE_PREV_COPY", $sformatf("\n%s", prev_req_item.convert2string()), UVM_LOW);
+   //`uvm_info("SAVE_PREV_COPY", $sformatf("\n%s", prev_req_item.convert2string()), UVM_LOW);
 endfunction : save_prev_req_item
 
 function void base_state::save_prev_rsp_item(apb_master_access_item prev_rsp);
    prev_rsp_item.copy(prev_rsp);
-   `uvm_info("SAVE_PREV_COPY", $sformatf("\n%s", prev_rsp_item.convert2string()), UVM_LOW);
+   //`uvm_info("SAVE_PREV_COPY", $sformatf("\n%s", prev_rsp_item.convert2string()), UVM_LOW);
 endfunction: save_prev_rsp_item
 
 
@@ -80,8 +80,8 @@ endfunction: do_compare
 function string base_state::convert2string();
    string s;
    $sformat(s, "%s\n", super.convert2string());
-   //$sformat(s, "%s\n Previous REQ item is %s\n Previous RSP item is %s", s, prev_req_item.convert2string(), prev_rsp_item.convert2string()); 
-   $sformat(s, "%s\n %s", s, req_item_to_be_sent.convert2string());
+   $sformat(s, "%s\n Previous REQ item is %s\n Previous RSP item is %s", s, prev_req_item.convert2string(), prev_rsp_item.convert2string()); 
+   $sformat(s, "%s\n Current REQ item Sent \n%s", s, req_item_to_be_sent.convert2string());
    return s;
 endfunction: convert2string
 

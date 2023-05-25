@@ -22,11 +22,10 @@ endclass: apb_slave_agent
 
 function apb_slave_agent::new(string name = "apb_slave_agent", uvm_component parent = null);
   super.new(name, parent);
-
+  setup_ap = new("setup_ap_ANALYSIS_EXPORT");
 endfunction
 
 function void apb_slave_agent::build_phase(uvm_phase phase);
-    setup_ap = new("setup_ap", this);
   slave_agent_cfg = apb_slave_agent_config::get_config(this);
   slave_monitor = apb_slave_monitor::type_id::create("slave_monitor", this);
   if(slave_agent_cfg.active == UVM_ACTIVE) begin
