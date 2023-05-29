@@ -34,7 +34,7 @@ function void HIGH_ERROR_state::set_data_items;
    rsp_item_to_be_sent.HREADY = param_enums::HIGH;
    rsp_item_to_be_sent.HRESP = param_enums::ERROR;
    if(prev_req_item.HWRITE == 1'b1)
-       rsp_item_to_be_sent.HRDATA = 32'h0;
+       rsp_item_to_be_sent.HRDATA = 32'hzzzz_zzzz;
 endfunction : set_data_items
 
 

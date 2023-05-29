@@ -14,7 +14,7 @@ class apb_master_setup_item extends uvm_sequence_item;
 
     //defining constraints for a general apb sequence item
     extern constraint HSIZE_constraint;
-    extern constraint HWDATA_subject_to_HWRITE_constraint;
+//    extern constraint HWDATA_subject_to_HWRITE_constraint;
     
     extern function new(string name = "apb_master_setup_item");
     extern function void do_copy(uvm_object rhs);
@@ -25,7 +25,7 @@ class apb_master_setup_item extends uvm_sequence_item;
 endclass : apb_master_setup_item
 
 constraint apb_master_setup_item::HSIZE_constraint {HSIZE inside {param_enums::BYTE, param_enums::HALF_WORD, param_enums::WORD};} //parameterize this according to the data bus width
-constraint apb_master_setup_item::HWDATA_subject_to_HWRITE_constraint {solve HWRITE before HWDATA; if(!HWRITE) HWDATA == 32'h00000000;}
+//constraint apb_master_setup_item::HWDATA_subject_to_HWRITE_constraint {solve HWRITE before HWDATA;}
 
 function apb_master_setup_item::new(string name = "apb_master_setup_item");
     super.new(name);

@@ -82,7 +82,7 @@ task base_test::run_phase(uvm_phase phase);
         //single_trans_seq.start(my_env.master_agent.master_sequencer);
         master_complete_seq.start(my_env.master_agent.master_sequencer);
         slave_complete_seq.start(my_env.slave_agent.slave_sequencer);
-        #10000;
+//        #10000;
     join_any
     phase.drop_objection(this);
 

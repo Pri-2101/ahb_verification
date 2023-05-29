@@ -90,7 +90,7 @@ function void coverage_collector_for_master::write(T t);
    $cast(rcvd_txn,t);
 
    HTRANS_covergroup.sample();
-    `uvm_info("COVERAGE_COLLECTOR_INFO", $sformatf("\n%s \n", rcvd_txn.convert2string()), UVM_LOW);
+    //`uvm_info("COVERAGE_COLLECTOR_INFO", $sformatf("\n%s \n", rcvd_txn.convert2string()), UVM_LOW);
    HBURST_covergroup.sample();
    HSIZE_covergroup.sample();
    HADDR_covergroup.sample();

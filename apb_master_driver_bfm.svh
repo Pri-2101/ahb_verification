@@ -4,6 +4,7 @@ import apb_master_agent_pkg::*;
 
 interface apb_master_driver_bfm(
     input HCLK,
+    output logic[31:0] HSEL,
     output logic HRESETn,
     output logic[31:0] HADDR, //param this
     output logic[2:0] HBURST,
@@ -40,14 +41,13 @@ interface apb_master_driver_bfm(
        while(!HREADY == 1) begin
 	  @(posedge HCLK);
        end
+       //#2ns;
        HADDR <= req.HADDR;
        HWDATA <= req.HWDATA;
        HWRITE <= req.HWRITE;
        HBURST <= req.HBURST;
        HSIZE <= req.HSIZE;
        HTRANS <= req.HTRANS;
-
-
     endtask : setup_phase
 
     task access_phase(apb_master_access_item rsp);
@@ -56,7 +56,6 @@ interface apb_master_driver_bfm(
        while(!HREADY == 1) begin
 	  @(posedge HCLK);
        end
-       
        rsp.HRDATA = HRDATA;
        rsp.HRESP = HRESP;
        rsp.HREADY = HREADY;
