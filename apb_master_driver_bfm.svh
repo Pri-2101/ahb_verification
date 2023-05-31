@@ -4,7 +4,6 @@ import apb_master_agent_pkg::*;
 
 interface apb_master_driver_bfm(
     input HCLK,
-    output logic[31:0] HSEL,
     output logic HRESETn,
     output logic[31:0] HADDR, //param this
     output logic[2:0] HBURST,

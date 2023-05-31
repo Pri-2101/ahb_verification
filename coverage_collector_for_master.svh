@@ -19,7 +19,7 @@ class coverage_collector_for_master extends uvm_subscriber #(apb_slave_setup_ite
        }
     endgroup // HTRANS_cover
 
-    covergroup HBURST_covergroup;
+    covergroup HBURST_HSIZE_covergroup;
        coverpoint rcvd_txn.HBURST {
 	  bins SINGLE_bin = {int'(param_enums::SINGLE)};
  	  bins INCR_bin = {int'(param_enums::INCR)};
@@ -30,25 +30,31 @@ class coverage_collector_for_master extends uvm_subscriber #(apb_slave_setup_ite
  	  bins WRAP16_bin = {int'(param_enums::WRAP16)};
  	  bins INCR16_bin = {int'(param_enums::INCR16)};
        }				  
-    endgroup // HBURST_cover
-    
-    covergroup HSIZE_covergroup;
+//    endgroup // HBURST_cover
+//    
+//    covergroup HSIZE_covergroup;
         coverpoint rcvd_txn.HSIZE {
 	   bins BYTE_bin = {int'(param_enums::BYTE)};
 	   bins HALF_WORD_bin = {int'(param_enums::HALF_WORD)};
 	   bins WORD_bin = {int'(param_enums::WORD)};
-	   bins DOUBLE_WORD_bin = {int'(param_enums::DOUBLE_WORD)};
-	   bins FOUR_WORD_LINE_bin = {int'(param_enums::FOUR_WORD_LINE)};
-	   bins EIGHT_WORD_LINE_bin = {int'(param_enums::EIGHT_WORD_LINE)};
-	   bins FIVE_TWELVE_bin = {int'(param_enums::FIVE_TWELVE)};
-	   bins TEN_TWENTY_FOUR_bin = {int'(param_enums::TEN_TWENTY_FOUR)};
-        }				   
+//	   bins DOUBLE_WORD_bin = {int'(param_enums::DOUBLE_WORD)};
+//	   bins FOUR_WORD_LINE_bin = {int'(param_enums::FOUR_WORD_LINE)};
+//	   bins EIGHT_WORD_LINE_bin = {int'(param_enums::EIGHT_WORD_LINE)};
+//	   bins FIVE_TWELVE_bin = {int'(param_enums::FIVE_TWELVE)};
+//	   bins TEN_TWENTY_FOUR_bin = {int'(param_enums::TEN_TWENTY_FOUR)};
+        }		
+    
+        cross rcvd_txn.HBURST, rcvd_txn.HSIZE;		   
     endgroup // HSIZE_covergroup
 
-   covergroup HADDR_covergroup;
+   covergroup HADDR_HWRITE_covergroup;
       coverpoint rcvd_txn.HADDR {
 	    bins HADDR_bins[10] = {[0:32'hFFFF_FFFF]};
       }
+      coverpoint rcvd_txn.HWRITE;
+
+      cross rcvd_txn.HADDR, rcvd_txn.HWRITE;
+
       //since the end of test is not determined by coverage in this case, we do not have to worry about the the exponentially massive set of possibilities for a 32 bit number
    endgroup // HADDR_covergroup
 
@@ -58,9 +64,9 @@ class coverage_collector_for_master extends uvm_subscriber #(apb_slave_setup_ite
       }
    endgroup // HWDATA_covergroup
    
-   covergroup HWRITE_covergroup;
-      coverpoint rcvd_txn.HWRITE;
-   endgroup // HWRITE_covergroup
+//   covergroup HWRITE_covergroup;
+//      coverpoint rcvd_txn.HWRITE;
+//   endgroup // HWRITE_covergroup
    
       
    extern function void write(T t);
@@ -75,11 +81,12 @@ function coverage_collector_for_master::new(string name = "coverage_collector_fo
 
    //instantiating the covergroup variables here
    HTRANS_covergroup = new;
-   HBURST_covergroup = new;
-   HSIZE_covergroup  = new;
-   HADDR_covergroup = new;
+   HBURST_HSIZE_covergroup = new;
+   //HBURST_covergroup = new;
+   //HSIZE_covergroup  = new;
+   //HADDR_covergroup = new;
    HWDATA_covergroup = new;
-   HWRITE_covergroup = new;
+   HADDR_HWRITE_covergroup = new;
 endfunction : new
 
 function void coverage_collector_for_master::write(T t);
@@ -91,9 +98,10 @@ function void coverage_collector_for_master::write(T t);
 
    HTRANS_covergroup.sample();
     //`uvm_info("COVERAGE_COLLECTOR_INFO", $sformatf("\n%s \n", rcvd_txn.convert2string()), UVM_LOW);
-   HBURST_covergroup.sample();
-   HSIZE_covergroup.sample();
-   HADDR_covergroup.sample();
+   HBURST_HSIZE_covergroup.sample();
+   //HBURST_covergroup.sample();
+   //HSIZE_covergroup.sample();
+   //HADDR_covergroup.sample();
    HWDATA_covergroup.sample();
-   HWRITE_covergroup.sample();
+   HADDR_HWRITE_covergroup.sample();
 endfunction : write
