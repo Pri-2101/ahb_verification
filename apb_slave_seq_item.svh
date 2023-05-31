@@ -1,6 +1,10 @@
 import uvm_pkg::*;
 `include "uvm_macros.svh"
 
+//--------------------------------------------------------------------------------------------------
+//---------------------------------APB_SLAVE_SETUP_ITEM--------------------------------------------
+//--------------------------------------------------------------------------------------------------
+
 class apb_slave_setup_item extends uvm_sequence_item;
     `uvm_object_utils(apb_slave_setup_item);
     
@@ -72,18 +76,19 @@ function void apb_slave_setup_item::do_record(uvm_recorder recorder);
  //Enter function body
 endfunction
 
-
+//--------------------------------------------------------------------------------------------------
+//---------------------------------APB_SLAVE_ACCESS_ITEM--------------------------------------------
+//--------------------------------------------------------------------------------------------------
 class apb_slave_access_item extends uvm_sequence_item;
     `uvm_object_utils(apb_slave_access_item);
 
     rand logic[31:0] HRDATA;
     rand logic HREADY;
     rand logic HRESP;
-    rand logic[2:0] HSIZE;
-    rand logic HWRITE;
+//
 
-    constraint HSIZE_constraint;
-    constraint HRDATA_subject_to_HWRITE_constraint;
+//    constraint HSIZE_constraint;
+//    constraint HRDATA_subject_to_HWRITE_constraint;
 
     extern function new(string name = "apb_slave_access_item");
     extern function void do_copy(uvm_object rhs);
@@ -94,8 +99,8 @@ class apb_slave_access_item extends uvm_sequence_item;
 
 endclass : apb_slave_access_item
 
-constraint apb_slave_access_item::HSIZE_constraint {HSIZE == 3'b011;}
-constraint apb_slave_access_item::HRDATA_subject_to_HWRITE_constraint {solve HWRITE before HRDATA; if(HWRITE) HRDATA == 32'h00000000;}
+//constraint apb_slave_access_item::HSIZE_constraint {HSIZE == 3'b011;}
+//constraint apb_slave_access_item::HRDATA_subject_to_HWRITE_constraint {solve HWRITE before HRDATA; if(HWRITE) HRDATA == 32'h00000000;}
 
 function apb_slave_access_item::new(string name = "apb_slave_access_item");
     super.new(name);
@@ -111,8 +116,8 @@ function void apb_slave_access_item::do_copy(uvm_object rhs);
     this.HRDATA = rhs_.HRDATA;
     this.HREADY = rhs_.HREADY;
     this.HRESP = rhs_.HRESP;
-    this.HWRITE = rhs_.HWRITE;
-    this.HSIZE = rhs_.HSIZE;
+//    this.HWRITE = rhs_.HWRITE;
+//    this.HSIZE = rhs_.HSIZE;
 endfunction : do_copy
 
 function bit apb_slave_access_item::do_compare(uvm_object rhs, uvm_comparer comparer);
@@ -125,16 +130,16 @@ function bit apb_slave_access_item::do_compare(uvm_object rhs, uvm_comparer comp
     return (super.do_compare(rhs, comparer)) &&
         (this.HRDATA == rhs_.HRDATA) &&
         (this.HREADY == rhs_.HREADY) &&
-        (this.HRESP == rhs_.HRESP) &&
-        (this.HWRITE == rhs_.HWRITE) &&
-        (this.HSIZE == rhs_.HSIZE);
+        (this.HRESP == rhs_.HRESP);
+//        (this.HWRITE == rhs_.HWRITE) &&
+//        (this.HSIZE == rhs_.HSIZE);
 
 endfunction : do_compare
 
 function string apb_slave_access_item::convert2string();
     string s;
     $sformat(s, "%s\n", super.convert2string());
-    $sformat(s, "%s\n HRDATA\t%0h\n HRESP\t%0b\n HREADY\t%0b\n HSIZE\t%0d\n HWRITE\t%0b\n", s, HRDATA, HRESP, HREADY, HSIZE, HWRITE);
+    $sformat(s, "%s\n HRDATA\t%0h\n HRESP\t%0b\n HREADY\t%0b\n", s, HRDATA, HRESP, HREADY);
     return s;
 endfunction : convert2string
 

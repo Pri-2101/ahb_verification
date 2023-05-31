@@ -148,7 +148,7 @@ endproperty; // WSCR3
 
 //Address changes during waited transfers
 property WSCR4;
-   (HREADY == param_enums::WAITED ##0 HTRANS == param_enums::IDLE) |-> HREADY == param_enums::WAITED throughout $changed(HADDR) |-> ##1 HTRANS == param_enums::NONSEQ ##0 !$changed(HADDR)[*0:$] ##1 HREADY == param_enums::ACTIVE; 
+   (HREADY == param_enums::WAITED ##0 HTRANS == param_enums::IDLE) |-> HREADY == param_enums::WAITED throughout $changed(HADDR) |-> ##1 HREADY == param_enums::WAITED throughout (HTRANS == param_enums::NONSEQ ##0 !$changed(HADDR)[*0:$]) ##1 HREADY == param_enums::ACTIVE; 
 endproperty; //WSCR4
 //not (if in waited state, the master changes from **HTRANS** IDLE to NONSEQ, and changes the address during NONSEQ by not holding it till HREADY is high in the next clock edge)
 //property WSCR8(datawidth);

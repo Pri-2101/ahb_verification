@@ -12,7 +12,7 @@ virtual class slave_base_state extends uvm_object;
    protected apb_slave_setup_item prev_req_item;
    protected apb_slave_access_item prev_rsp_item;
 
-   protected apb_slave_setup_item benched;
+//   protected apb_slave_setup_item benched;
 
 //-----------------------------------------------------------------------------------
    //User Functions

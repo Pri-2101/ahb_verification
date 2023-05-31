@@ -11,7 +11,7 @@ class coverage_collector_for_master extends uvm_subscriber #(apb_slave_setup_ite
 
    //define covergroups here
     covergroup HTRANS_covergroup;
-       coverpoint rcvd_txn.HTRANS {
+       HTRANS_coverpoint : coverpoint rcvd_txn.HTRANS {
           bins IDLE_bin = {param_enums::IDLE};
 	  bins BUSY_bin = {param_enums::BUSY};
 	  bins NONSEQ_bin = {param_enums::NONSEQ};
@@ -20,7 +20,7 @@ class coverage_collector_for_master extends uvm_subscriber #(apb_slave_setup_ite
     endgroup // HTRANS_cover
 
     covergroup HBURST_HSIZE_covergroup;
-       coverpoint rcvd_txn.HBURST {
+       HBURST_coverpoint : coverpoint rcvd_txn.HBURST {
 	  bins SINGLE_bin = {int'(param_enums::SINGLE)};
  	  bins INCR_bin = {int'(param_enums::INCR)};
  	  bins WRAP4_bin = {int'(param_enums::WRAP4)};
@@ -33,7 +33,7 @@ class coverage_collector_for_master extends uvm_subscriber #(apb_slave_setup_ite
 //    endgroup // HBURST_cover
 //    
 //    covergroup HSIZE_covergroup;
-        coverpoint rcvd_txn.HSIZE {
+        HSIZE_coverpoint : coverpoint rcvd_txn.HSIZE {
 	   bins BYTE_bin = {int'(param_enums::BYTE)};
 	   bins HALF_WORD_bin = {int'(param_enums::HALF_WORD)};
 	   bins WORD_bin = {int'(param_enums::WORD)};
@@ -44,22 +44,22 @@ class coverage_collector_for_master extends uvm_subscriber #(apb_slave_setup_ite
 //	   bins TEN_TWENTY_FOUR_bin = {int'(param_enums::TEN_TWENTY_FOUR)};
         }		
     
-        cross rcvd_txn.HBURST, rcvd_txn.HSIZE;		   
+        cross HBURST_coverpoint, HSIZE_coverpoint;		   
     endgroup // HSIZE_covergroup
 
    covergroup HADDR_HWRITE_covergroup;
-      coverpoint rcvd_txn.HADDR {
+      HADDR_coverpoint : coverpoint rcvd_txn.HADDR {
 	    bins HADDR_bins[10] = {[0:32'hFFFF_FFFF]};
       }
-      coverpoint rcvd_txn.HWRITE;
+      HWRITE_coverpoint : coverpoint rcvd_txn.HWRITE;
 
-      cross rcvd_txn.HADDR, rcvd_txn.HWRITE;
+      cross HADDR_coverpoint, HWRITE_coverpoint;
 
       //since the end of test is not determined by coverage in this case, we do not have to worry about the the exponentially massive set of possibilities for a 32 bit number
    endgroup // HADDR_covergroup
 
    covergroup HWDATA_covergroup;
-      coverpoint rcvd_txn.HWDATA {
+      HWDATA_coverpoint : coverpoint rcvd_txn.HWDATA {
             bins HWDATA_bins[10] = {[0:32'hFFFF_FFFF]};
       }
    endgroup // HWDATA_covergroup

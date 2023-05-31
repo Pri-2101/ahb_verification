@@ -13,6 +13,7 @@ interface apb_slave_driver_bfm (
   input HWRITE,
   input [1:0] HTRANS,
   input [2:0] HSIZE,
+  input HREADY,
   output logic HRESP,
   output logic HREADYOUT
   ); 
@@ -53,7 +54,7 @@ interface apb_slave_driver_bfm (
   task access_phase(apb_slave_access_item rsp);
     @(posedge HCLK);
     //#2ns;    
-    while (HSEL[apb_index] != 1'b1) @(posedge HCLK);
+    while (HSEL[apb_index] != 1'b1 || HREADY !== 1'b1) @(posedge HCLK);
     HRDATA <= rsp.HRDATA;
     HREADYOUT <= rsp.HREADY;
     HRESP <= rsp.HRESP; 

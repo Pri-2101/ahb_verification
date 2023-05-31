@@ -33,13 +33,13 @@ endclass : HIGH_OKAY_state
 function void HIGH_OKAY_state::set_data_items;
    rsp_item_to_be_sent.HREADY = param_enums::HIGH;
    rsp_item_to_be_sent.HRESP = param_enums::OKAY;
-   if(prev_req_item.HWRITE == 1'b1)
+   if(prev_req_item.HWRITE == 1'b1 || prev_req_item.HTRANS ==  param_enums::IDLE)
        rsp_item_to_be_sent.HRDATA = 32'hzzzz_zzzz;
-   else begin
-       if(reserve.compare(prev_req_item)) begin
-            rsp_item_to_be_sent.HRDATA = reserve.HRDATA;
-       end
-   end
+//   else begin
+//       if(reserve.compare(prev_req_item)) begin
+//            rsp_item_to_be_sent.HRDATA = reserve.HRDATA;
+//       end
+//   end
 endfunction : set_data_items
 
 
