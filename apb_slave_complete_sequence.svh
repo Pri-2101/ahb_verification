@@ -21,7 +21,7 @@ task apb_slave_complete_sequence::body;
    apb_slave_agent_config master_agent_cfg = apb_slave_agent_config::get_config(m_sequencer);
    apb_slave_setup_item req;
    apb_slave_access_item rsp;
-   uvm_sequence_item item;
+   
    int i = 0;
    forever begin
       i++;

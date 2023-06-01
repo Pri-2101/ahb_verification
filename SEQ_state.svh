@@ -61,6 +61,7 @@ function void SEQ_state::set_data_items;
   //if slave wasn't ready, hold the data
  if(prev_rsp_item.HREADY == param_enums::LOW) begin
     req_item_to_be_sent.HADDR = prev_req_item.HADDR;
+    no_of_transfers = no_of_transfers + 1;
  end
  else begin
     req_item_to_be_sent.HADDR = prev_req_item.HADDR + size_increment;

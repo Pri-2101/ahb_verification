@@ -34,7 +34,7 @@ task apb_slave_driver::run_phase(uvm_phase phase);
 //  uvm_sequence_item item;
 //  apb_slave_setup_item req;
 //  apb_slave_access_item rsp;
-  
+  //slave_driver_bfm.init();
   fork
     do_pipelined_transfer;
     do_pipelined_transfer;

@@ -31,6 +31,12 @@ interface apb_slave_driver_bfm (
     end
   endtask : reset
 
+  task init();
+     HREADYOUT <= 1'b0;
+     #20;
+     HREADYOUT <= 1'b1;
+  endtask : init
+
   task setup_phase(apb_slave_setup_item req);
     @(posedge HCLK);
     //    #2ns;
@@ -54,7 +60,7 @@ interface apb_slave_driver_bfm (
   task access_phase(apb_slave_access_item rsp);
     @(posedge HCLK);
     //#2ns;    
-    while (HSEL[apb_index] != 1'b1 || HREADY !== 1'b1) @(posedge HCLK);
+    while (HSEL[apb_index] != 1'b1) @(posedge HCLK);
     HRDATA <= rsp.HRDATA;
     HREADYOUT <= rsp.HREADY;
     HRESP <= rsp.HRESP; 
