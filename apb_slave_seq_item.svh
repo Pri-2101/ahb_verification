@@ -73,7 +73,14 @@ function void apb_slave_setup_item::do_print(uvm_printer printer);
 endfunction : do_print
 
 function void apb_slave_setup_item::do_record(uvm_recorder recorder);
- //Enter function body
+   super.do_record(recorder);
+    
+    `uvm_record_field("HADDR", HADDR);
+    `uvm_record_field("HBURST", HBURST);
+    `uvm_record_field("HSIZE", HSIZE);
+    `uvm_record_field("HTRANS", HTRANS);
+    `uvm_record_field("HWDATA", HWDATA);
+    `uvm_record_field("HWRITE", HWRITE);
 endfunction
 
 //--------------------------------------------------------------------------------------------------
@@ -148,6 +155,11 @@ function void apb_slave_access_item::do_print(uvm_printer printer);
 endfunction : do_print
 
 function void apb_slave_access_item::do_record(uvm_recorder recorder);
+   super.do_record(recorder);
+    
+    `uvm_record_field("HRDATA", HRDATA);
+    `uvm_record_field("HREADY", HREADY);
+    `uvm_record_field("HRESP", HRESP);
 endfunction : do_record
 
 

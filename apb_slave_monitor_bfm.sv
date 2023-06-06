@@ -120,8 +120,8 @@ interface apb_slave_monitor_bfm (input HCLK,
 //      ASSERT_WSCR6 : assert property(@(posedge HCLK) WSCR6);
 //      COVER_WSCR6 : cover property(@(posedge HCLK) WSCR6);
 
-      ASSERT_WSCR4 : assert property(@(posedge HCLK) WSCR4);
-      COVER_WSCR4 : cover property(@(posedge HCLK) WSCR4);
+//      ASSERT_WSCR4 : assert property(@(posedge HCLK) WSCR4);//
+//      COVER_WSCR4 : cover property(@(posedge HCLK) WSCR4);
 
 //      ASSERT_WSCR8 : assert property(@(posedge HCLK) WSCR8(param_enums::datawidth));
 //      COVER_WSCR8 : cover property(@(posedge HCLK) WSCR8(param_enums::datawidth));

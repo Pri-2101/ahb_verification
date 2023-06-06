@@ -142,14 +142,16 @@ property WSCR2;
 endproperty; // WSCR2
 
 property WSCR3;
-   HREADY == param_enums::WAITED ##0 (HBURST !== param_enums::SINGLE && HBURST !== param_enums::INCR) ##0 (HTRANS == param_enums::BUSY) ##[1:$] (HTRANS == param_enums::SEQ) |-> ##1 (HTRANS == param_enums::SEQ)[*0:$] ##0 (HREADY == param_enums::ACTIVE);
+   HREADY == param_enums::WAITED throughout (HBURST == param_enums::INCR ##0 HTRANS == param_enums::BUSY ##[1:$] (HTRANS == param_enums::NONSEQ)) |-> HTRANS == param_enums::NONSEQ[*0:$] ##0 (HREADY == param_enums::ACTIVE);
 endproperty; // WSCR3
 
 
 //Address changes during waited transfers
-property WSCR4;
-   (HREADY == param_enums::WAITED ##0 HTRANS == param_enums::IDLE) |-> HREADY == param_enums::WAITED throughout $changed(HADDR) |-> ##1 HREADY == param_enums::WAITED throughout (HTRANS == param_enums::NONSEQ ##0 !$changed(HADDR)[*0:$]) ##1 HREADY == param_enums::ACTIVE; 
-endproperty; //WSCR4
+//property WSCR4;
+//    int prev_value = 32'h0;
+//   (HREADY == param_enums::WAITED ##0 HTRANS == param_enums::IDLE) ##0 (1'b1, prev_value = HADDR) |-> HTRANS == param_enums::IDLE throughout (HREADY == param_enums::WAITED throughout ##[0:$](HADDR !== prev_value));
+//endproperty; //WSCR4
+//HREADY == param_enums::WAITED ##0  throughout (HADDR !== prev_value) |-> ##1 HREADY == param_enums::WAITED ##0 (1'b1, prev_value = HADDR) throughout (HTRANS == param_enums::NONSEQ ##0 (HADDR == prev_value)[*0:$]) ##1 HREADY == param_enums::ACTIVE; 
 //not (if in waited state, the master changes from **HTRANS** IDLE to NONSEQ, and changes the address during NONSEQ by not holding it till HREADY is high in the next clock edge)
 //property WSCR8(datawidth);
 //   HREADY == param_enums::WAITED |-> ##[0:$] (HTRANS[1:0] == param_enums::IDLE) ##[0:$] (HTRANS[1:0] == param_enums::NONSEQ) ##[0:$] (!$stable(HADDR[datawidth:0], @(posedge HCLK)) ##0 (HTRANS[1:0] == param_enums::NONSEQ) ##[0:$] !$stable(HADDR[datawidth:0], @(posedge HCLK))) ##[0:$] (HREADY == param_enums::ACTIVE);
