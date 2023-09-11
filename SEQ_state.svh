@@ -57,9 +57,11 @@ function void SEQ_state::set_data_items;
  req_item_to_be_sent.HBURST = prev_req_item.HBURST;
  req_item_to_be_sent.HSIZE = prev_req_item.HSIZE;
  req_item_to_be_sent.HTRANS = param_enums::SEQ;
+
   //if slave wasn't ready, hold the data
  if(prev_rsp_item.HREADY == param_enums::LOW) begin
     req_item_to_be_sent.HADDR = prev_req_item.HADDR;
+    no_of_transfers = no_of_transfers + 1;
  end
  else begin
     req_item_to_be_sent.HADDR = prev_req_item.HADDR + size_increment;
@@ -70,6 +72,11 @@ function void SEQ_state::set_data_items;
        end
    end
  end
+ 
+ if(req_item_to_be_sent.HWRITE == 1'b0) begin
+        req_item_to_be_sent.HWDATA = 32'hzzzz_zzzz;
+end
+ 
 endfunction : set_data_items
 
 //-----------------------UPDATE_TRANSFER_VARIABLES------------------------------

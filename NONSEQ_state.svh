@@ -88,6 +88,9 @@ function void NONSEQ_state::set_data_items;
       end // else: !if(req_item_to_be_sent.HBURST == INCR)
    end // else: !if(req_item_to_be_sent.HBURST !== SINGLE )
    
+   if(req_item_to_be_sent.HWRITE == 1'b0) begin
+      req_item_to_be_sent.HWDATA = 32'hzzzz_zzzz;
+   end
 endfunction : set_data_items
 
 //-----------------------SET_SIZE_INCREMENT_VALUES------------------------------

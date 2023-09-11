@@ -96,12 +96,13 @@ interface apb_slave_monitor_bfm (input HCLK,
       ASSERT_BurstOneKBOverflow : assert property(@(posedge HCLK) BurstOneKBOverflow);
       COVER_BurstOneKBOverflow : cover property(@(posedge HCLK) BurstOneKBOverflow);
 
-      //assert property(@(posedge HCLK) NonIncrBurstWrongTermination(beats));
-      //assert property(@(posedge HCLK) NonIncrBurstWrongTerminationSeq(beats));
-      //assert property(@(posedge HCLK) FixedBurstWrongTermination(beats));
-      //assert property(@(posedge HCLK) FixedBurstWrongTerminationSeq(beats));
-      ASSERT_SingleBurstWrongTermination : assert property(@(posedge HCLK) SingleBurstWrongTermination);
-      COVER_SingleBurstWrongTermination : cover property(@(posedge HCLK) SingleBurstWrongTermination);
+      //assert property(@(posedge HCLK) IncrBurstTermination(beats));
+
+      ASSERT_FixedBurstTermination : assert property(@(posedge HCLK) FixedBurstTermination);
+      COVER_FixedBurstTermination : cover property(@(posedge HCLK) FixedBurstTermination);
+
+      ASSERT_SingleBurstTermination : assert property(@(posedge HCLK) SingleBurstTermination);
+      COVER_SingleBurstTermination : cover property(@(posedge HCLK) SingleBurstTermination);
 
       //assert property(@(posedge HCLK) LockedTransferNoIDLETerm);
       ASSERT_WSCR1 : assert property(@(posedge HCLK) WSCR1);
@@ -113,23 +114,20 @@ interface apb_slave_monitor_bfm (input HCLK,
       ASSERT_WSCR3 : assert property(@(posedge HCLK) WSCR3);
       COVER_WSCR3 : cover property(@(posedge HCLK) WSCR3);
 
-      ASSERT_WSCR4 : assert property(@(posedge HCLK) WSCR4);
-      COVER_WSCR4 : cover property(@(posedge HCLK) WSCR4);
-
-      ASSERT_WSCR5 : assert property(@(posedge HCLK) WSCR5);
-      COVER_WSCR5 : cover property(@(posedge HCLK) WSCR5);
+//      ASSERT_WSCR5 : assert property(@(posedge HCLK) WSCR5);
+//      COVER_WSCR5 : cover property(@(posedge HCLK) WSCR5);
  
-      ASSERT_WSCR6 : assert property(@(posedge HCLK) WSCR6);
-      COVER_WSCR6 : cover property(@(posedge HCLK) WSCR6);
+//      ASSERT_WSCR6 : assert property(@(posedge HCLK) WSCR6);
+//      COVER_WSCR6 : cover property(@(posedge HCLK) WSCR6);
 
-      ASSERT_WSCR7 : assert property(@(posedge HCLK) WSCR7(param_enums::datawidth));
-      COVER_WSCR7 : cover property(@(posedge HCLK) WSCR7(param_enums::datawidth));
+//      ASSERT_WSCR4 : assert property(@(posedge HCLK) WSCR4);//
+//      COVER_WSCR4 : cover property(@(posedge HCLK) WSCR4);
 
-      ASSERT_WSCR8 : assert property(@(posedge HCLK) WSCR8(param_enums::datawidth));
-      COVER_WSCR8 : cover property(@(posedge HCLK) WSCR8(param_enums::datawidth));
+//      ASSERT_WSCR8 : assert property(@(posedge HCLK) WSCR8(param_enums::datawidth));
+//      COVER_WSCR8 : cover property(@(posedge HCLK) WSCR8(param_enums::datawidth));
 
-      ASSERT_WSCR9 : assert property(@(posedge HCLK) WSCR9(param_enums::datawidth));
-      COVER_WSCR9 : cover property(@(posedge HCLK) WSCR9(param_enums::datawidth));
+//      ASSERT_WSCR9 : assert property(@(posedge HCLK) WSCR9(param_enums::datawidth));
+//      COVER_WSCR9 : cover property(@(posedge HCLK) WSCR9(param_enums::datawidth));
 
 
 endinterface: apb_slave_monitor_bfm

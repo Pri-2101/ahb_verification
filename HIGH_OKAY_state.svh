@@ -33,8 +33,13 @@ endclass : HIGH_OKAY_state
 function void HIGH_OKAY_state::set_data_items;
    rsp_item_to_be_sent.HREADY = param_enums::HIGH;
    rsp_item_to_be_sent.HRESP = param_enums::OKAY;
-   if(prev_req_item.HWRITE == 1'b1)
-       rsp_item_to_be_sent.HRDATA = 32'h0;
+   if(prev_req_item.HWRITE == 1'b1 || prev_req_item.HTRANS ==  param_enums::IDLE || prev_req_item.HWRITE == 1'bx)
+       rsp_item_to_be_sent.HRDATA = 32'hzzzz_zzzz;
+//   else begin
+//       if(reserve.compare(prev_req_item)) begin
+//            rsp_item_to_be_sent.HRDATA = reserve.HRDATA;
+//       end
+//   end
 endfunction : set_data_items
 
 
@@ -50,12 +55,12 @@ endfunction : perform_action
 //-----------------------DETERMINE_AND_CHANGE_TO_NEXT_STATE------------------------------
 
 function bit[1:0] HIGH_OKAY_state::determine_and_change_to_next_state;
-   if(no_of_transfers > 1) begin
-      std::randomize(next_state) with {next_state inside {param_enums::LOW_OKAY, param_enums::LOW_ERROR};};
-   end
-   else begin
-      std::randomize(next_state) with {next_state inside {param_enums::HIGH_OKAY, param_enums::LOW_ERROR};};
-   end
+//   if(no_of_transfers > 1) begin
+//      std::randomize(next_state) with {next_state inside {param_enums::LOW_OKAY, param_enums::LOW_ERROR}; next_state dist {param_enums::}};
+//   end
+//   else begin
+      std::randomize(next_state) with {next_state inside {param_enums::HIGH_OKAY, param_enums::LOW_ERROR, param_enums::LOW_OKAY}; next_state dist {param_enums::HIGH_OKAY := 400, param_enums::LOW_OKAY := 200, param_enums::LOW_ERROR := 80};};
+//   end
    return next_state;
 endfunction : determine_and_change_to_next_state
     

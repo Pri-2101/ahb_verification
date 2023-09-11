@@ -40,14 +40,13 @@ interface apb_master_driver_bfm(
        while(!HREADY == 1) begin
 	  @(posedge HCLK);
        end
+       //#2ns;
        HADDR <= req.HADDR;
        HWDATA <= req.HWDATA;
        HWRITE <= req.HWRITE;
        HBURST <= req.HBURST;
        HSIZE <= req.HSIZE;
        HTRANS <= req.HTRANS;
-
-
     endtask : setup_phase
 
     task access_phase(apb_master_access_item rsp);
@@ -56,7 +55,6 @@ interface apb_master_driver_bfm(
        while(!HREADY == 1) begin
 	  @(posedge HCLK);
        end
-       
        rsp.HRDATA = HRDATA;
        rsp.HRESP = HRESP;
        rsp.HREADY = HREADY;

@@ -26,11 +26,11 @@ endclass : IDLE_state
 // User Functions
 
 function void IDLE_state::set_data_items;
- req_item_to_be_sent.HADDR = 32'h0000_0000;
+ req_item_to_be_sent.HADDR = 32'hzzzz_zzzz;
  req_item_to_be_sent.HTRANS = param_enums::IDLE;
  req_item_to_be_sent.HSIZE = param_enums::WORD;
- req_item_to_be_sent.HWRITE = 1'b0;
- req_item_to_be_sent.HWDATA = 32'h0000_0000;
+ req_item_to_be_sent.HWRITE = 1'bz;
+ req_item_to_be_sent.HWDATA = 32'hzzzz_zzzz;
  req_item_to_be_sent.HBURST = param_enums::SINGLE;
 endfunction : set_data_items
 

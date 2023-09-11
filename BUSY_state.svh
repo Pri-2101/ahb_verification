@@ -56,6 +56,7 @@ function void BUSY_state::set_data_items;
  req_item_to_be_sent.HBURST = prev_req_item.HBURST;
  req_item_to_be_sent.HSIZE = prev_req_item.HSIZE;
  req_item_to_be_sent.HTRANS = param_enums::BUSY;
+ req_item_to_be_sent.HWDATA = prev_req_item.HWDATA;
   //if slave wasn't ready, hold the data
 // if(prev_rsp_item.HREADY == param_enums::LOW) begin
     req_item_to_be_sent.HADDR = prev_req_item.HADDR;

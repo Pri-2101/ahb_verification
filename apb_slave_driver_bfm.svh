@@ -13,6 +13,7 @@ interface apb_slave_driver_bfm (
   input HWRITE,
   input [1:0] HTRANS,
   input [2:0] HSIZE,
+  input HREADY,
   output logic HRESP,
   output logic HREADYOUT
   ); 
@@ -30,34 +31,42 @@ interface apb_slave_driver_bfm (
     end
   endtask : reset
 
+  task init();
+     HREADYOUT <= 1'b0;
+     #20;
+     HREADYOUT <= 1'b1;
+  endtask : init
+
   task setup_phase(apb_slave_setup_item req);
     @(posedge HCLK);
+    //    #2ns;
     while (HSEL[apb_index] != 1'b1) @(posedge HCLK);
     req.HADDR = HADDR;
     req.HWRITE = HWRITE;
     req.HBURST = HBURST;
     req.HSIZE = HSIZE;
     req.HTRANS = HTRANS;
-    if (req.HWRITE) begin
+    //if (req.HWRITE) begin
         req.HWDATA = HWDATA;
-    end
-    else begin 
-        req.HWDATA = 0;
-    end
-    HREADYOUT <= 1'b0;
+//    end
+//    else begin 
+//        req.HWDATA = 0;
+//    end
+    //HREADYOUT <= 1'b0;
+
+
   endtask : setup_phase
 
   task access_phase(apb_slave_access_item rsp);
     @(posedge HCLK);
+    //#2ns;    
     while (HSEL[apb_index] != 1'b1) @(posedge HCLK);
-    if (!rsp.HWRITE) begin 
-	HRDATA <= rsp.HRDATA;
-    end
+    HRDATA <= rsp.HRDATA;
     HREADYOUT <= rsp.HREADY;
     HRESP <= rsp.HRESP; 
     //HWRITE <= rsp.HWRITE;
     //HSIZE <= rsp.HSIZE;
-    
+
   endtask : access_phase //Check point 4 for clarification from points to remember.md in GenNotes Folder
 
 endinterface: apb_slave_driver_bfm
